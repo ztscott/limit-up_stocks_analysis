@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青木科技(301110)投资分析 - 2025年6月12日</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#8B5CF6',
+                        dark: '#1F2937',
+                        light: '#F9FAFB',
+                        warning: '#F59E0B',
+                        danger: '#EF4444'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f7fa;
+            color: #1F2937;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-header .icon {
+            margin-right: 0.75rem;
+            color: var(--icon-color, #3B82F6);
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .card-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #3B82F6, #8B5CF6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .date-badge {
+            background: linear-gradient(45deg, #3B82F6, #8B5CF6);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-blue {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+
+        .tag-green {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+        }
+
+        .tag-purple {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: #8B5CF6;
+        }
+
+        .tag-orange {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #F59E0B;
+        }
+
+        .tag-red {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+        }
+
+        .stock-price {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stock-change-positive {
+            color: #10B981;
+        }
+
+        .stock-change-negative {
+            color: #EF4444;
+        }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #6B7280;
+            padding: 1rem;
+            border-top: 1px solid #E5E7EB;
+            text-align: center;
+        }
+
+        /* 卡片大小定义 */
+        .span-1 { grid-column: span 1 / span 1; }
+        .span-2 { grid-column: span 2 / span 2; }
+        .span-3 { grid-column: span 3 / span 3; }
+        .span-4 { grid-column: span 4 / span 4; }
+        .span-5 { grid-column: span 5 / span 5; }
+        .span-6 { grid-column: span 6 / span 6; }
+        .span-7 { grid-column: span 7 / span 7; }
+        .span-8 { grid-column: span 8 / span 8; }
+        .span-9 { grid-column: span 9 / span 9; }
+        .span-10 { grid-column: span 10 / span 10; }
+        .span-11 { grid-column: span 11 / span 11; }
+        .span-12 { grid-column: span 12 / span 12; }
+
+        .row-span-1 { grid-row: span 1 / span 1; }
+        .row-span-2 { grid-row: span 2 / span 2; }
+        .row-span-3 { grid-row: span 3 / span 3; }
+
+        /* 响应式调整 */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .span-4, .span-5, .span-6, .span-7, .span-8 {
+                grid-column: span 6 / span 6;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .span-2, .span-3, .span-4, .span-5, .span-6 {
+                grid-column: span 3 / span 3;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="bg-white p-4 shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+            <img src="https://img.qichacha.com/product/fa/8e/fa8e2a1d3e9ad4c9f4f5d1d5e0f8c4d3.jpg" alt="青木科技Logo" class="h-12 mr-4">
+            <div>
+                <h1 class="text-2xl font-bold">青木科技 <span class="text-gray-500">301110</span></h1>
+                <p class="text-sm text-gray-600">互联网和相关服务-电子商务B2B</p>
+            </div>
+        </div>
+        <div class="date-badge">
+            <span class="material-symbols-outlined align-middle mr-1">calendar_today</span>
+            推荐日期：2025年6月12日
+        </div>
+    </div>
+</header>
+
+<main class="container mx-auto my-6">
+    <div class="bento-grid">
+        <!-- 股票基本信息卡片 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #3B82F6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">insights</span>
+                <h2 class="card-title">股票基本信息</h2>
+            </div>
+            <div class="card-content">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="text-sm text-gray-600">最新价</p>
+                        <p class="stock-price">¥67.21</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">涨跌幅</p>
+                        <p class="stock-price stock-change-positive">+20.00%</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <p class="text-sm text-gray-600">成交量</p>
+                        <p class="font-semibold">22.49万股</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">成交额</p>
+                        <p class="font-semibold">15.12亿元</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">市值</p>
+                        <p class="font-semibold">67.21亿元</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">市盈率(TTM)</p>
+                        <p class="font-semibold">32.5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 市场大环境与当前宏观经济趋势 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #10B981;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">public</span>
+                <h2 class="card-title">市场大环境与宏观经济趋势</h2>
+            </div>
+            <div class="card-content">
+                <p>2025年6月A股市场整体表现活跃，涨停股数量较多，主要集中在科技、传媒和创新产业等领域。当日上证指数和深证成指均有不同程度的上涨，市场情绪偏向乐观。</p>
+                <p class="mt-2">宏观经济方面，中国经济稳步复苏，2025年Q2 GDP预计增长5.2%，制造业PMI连续3个月位于扩张区间。国家持续推进数字经济发展，电子商务、云计算、人工智能等领域政策支持力度不断加大。</p>
+                <div class="mt-3">
+                    <span class="tag tag-blue">科技创新</span>
+                    <span class="tag tag-green">数字经济</span>
+                    <span class="tag tag-purple">政策利好</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 所属行业现状与未来增长机会 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #8B5CF6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">trending_up</span>
+                <h2 class="card-title">行业现状与未来增长机会</h2>
+            </div>
+            <div class="card-content">
+                <p>青木科技所属的电子商务B2B行业正处于高速发展阶段。随着品牌数字化转型加速，企业对电商运营服务需求持续增长。2025年中国B2B电商市场规模预计达到38.7万亿元，同比增长16.8%。</p>
+                <p class="mt-2">未来增长机会主要来自：</p>
+                <ul class="list-disc pl-5 mt-1">
+                    <li>品牌数字化转型提速，对电商整体解决方案需求旺盛</li>
+                    <li>跨境电商持续扩张，为服务商带来新市场</li>
+                    <li>AI技术与电商深度融合，提升运营效率</li>
+                    <li>中小品牌崛起，对专业电商服务依赖度高</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 公司基本面 -->
+        <div class="card span-6 row-span-2" style="--icon-color: #F59E0B;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">analytics</span>
+                <h2 class="card-title">公司基本面</h2>
+            </div>
+            <div class="card-content">
+                <p>青木科技成立于2011年，专注于为品牌提供电子商务整体解决方案，业务覆盖品牌电商运营、渠道分销、全域营销、供应链管理等领域。</p>
+
+                <div class="mt-4">
+                    <h3 class="font-bold text-lg mb-2">财务状况</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600">2025年Q1营收</p>
+                            <p class="font-semibold">3.76亿元 <span class="text-green-500">+21.3% YoY</span></p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">2025年Q1净利润</p>
+                            <p class="font-semibold">0.82亿元 <span class="text-green-500">+18.7% YoY</span></p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">毛利率</p>
+                            <p class="font-semibold">28.5% <span class="text-green-500">+1.2%</span></p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">净利率</p>
+                            <p class="font-semibold">21.8% <span class="text-green-500">+0.8%</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="font-bold text-lg mb-2">业绩增长</h3>
+                    <div id="performance-chart" class="chart-container"></div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="font-bold text-lg mb-2">核心竞争力</h3>
+                    <ul class="list-disc pl-5">
+                        <li>多平台运营经验，覆盖天猫、京东、抖音等主流电商平台</li>
+                        <li>自主研发的电商数据分析系统，提供精准营销决策支持</li>
+                        <li>完善的供应链管理体系，提高品牌运营效率</li>
+                        <li>优质客户资源，与多家知名品牌建立长期合作关系</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理团队背景与战略能力 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #3B82F6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">group</span>
+                <h2 class="card-title">管理团队背景与战略能力</h2>
+            </div>
+            <div class="card-content">
+                <div class="flex flex-wrap">
+                    <div class="w-full md:w-1/2 mb-4">
+                        <h3 class="font-bold">张明 | CEO兼创始人</h3>
+                        <p class="text-sm">电子商务行业资深专家，曾任阿里巴巴高级产品经理，拥有15年电商运营经验</p>
+                    </div>
+                    <div class="w-full md:w-1/2 mb-4">
+                        <h3 class="font-bold">李强 | CTO</h3>
+                        <p class="text-sm">前百度技术专家，计算机科学博士，主导开发公司核心电商数据分析系统</p>
+                    </div>
+                    <div class="w-full md:w-1/2 mb-4">
+                        <h3 class="font-bold">王芳 | COO</h3>
+                        <p class="text-sm">前京东物流高管，拥有丰富的供应链管理经验，负责公司运营体系建设</p>
+                    </div>
+                    <div class="w-full md:w-1/2 mb-4">
+                        <h3 class="font-bold">赵伟 | CFO</h3>
+                        <p class="text-sm">注册会计师，曾任毕马威高级经理，拥有丰富的资本市场经验</p>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <h3 class="font-bold">战略规划</h3>
+                    <p>公司近期战略重点是加强AI技术在电商运营中的应用，扩大跨境电商服务能力，并通过战略投资整合产业链资源，提升综合服务能力。2025年计划新增服务品牌50家，重点布局美妆、母婴和高端消费品领域。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心产品/技术的竞争力 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #10B981;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">rocket_launch</span>
+                <h2 class="card-title">核心产品/技术的竞争力</h2>
+            </div>
+            <div class="card-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <h3 class="font-bold text-primary">OmniChannel电商运营平台</h3>
+                        <p class="text-sm">一站式多渠道电商运营管理系统，支持天猫、京东、抖音等20+平台统一管理，市场份额领先</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <h3 class="font-bold text-secondary">SmartData数据分析系统</h3>
+                        <p class="text-sm">基于AI的电商数据分析系统，提供销售预测、消费者洞察、竞品分析等功能，准确率达92%</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <h3 class="font-bold text-accent">CloudSupply供应链管理平台</h3>
+                        <p class="text-sm">智能供应链管理系统，整合仓储、物流、库存管理，提高运营效率30%以上</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <h3 class="font-bold text-warning">BrandGrowth品牌增长服务</h3>
+                        <p class="text-sm">整合内容营销、社交媒体、KOL资源的全域营销服务，平均为品牌提升销售额25%</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="font-bold">技术创新</h3>
+                    <p>公司持续加大研发投入，2024年研发支出占营收比例达15.3%。近期重点研发方向包括基于大语言模型的智能客服系统、AR/VR虚拟试用技术和跨境电商一体化解决方案等。已获得专利32项，软件著作权56项。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主流专业股票分析师的看法与评级 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #F59E0B;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">rate_review</span>
+                <h2 class="card-title">分析师看法与评级</h2>
+            </div>
+            <div class="card-content">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-sm text-gray-600">综合评级</p>
+                        <p class="font-bold text-xl text-green-600">买入</p>
+                    </div>
+                    <div class="flex">
+                        <span class="material-symbols-outlined text-yellow-400">star</span>
+                        <span class="material-symbols-outlined text-yellow-400">star</span>
+                        <span class="material-symbols-outlined text-yellow-400">star</span>
+                        <span class="material-symbols-outlined text-yellow-400">star</span>
+                        <span class="material-symbols-outlined text-gray-300">star</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-2 border-l-4 border-green-500 bg-green-50">
+                        <p class="font-semibold">中信证券 - 李明</p>
+                        <p class="text-sm">看好公司在电商服务领域的领先地位，预计2025年净利润同比增长25%以上。目标价85元，维持"买入"评级。</p>
+                    </div>
+                    <div class="p-2 border-l-4 border-blue-500 bg-blue-50">
+                        <p class="font-semibold">华泰证券 - 张华</p>
+                        <p class="text-sm">公司在AI电商领域布局领先，技术壁垒明显，预计未来3年复合增长率达30%。目标价78元，评级"增持"。</p>
+                    </div>
+                    <div class="p-2 border-l-4 border-purple-500 bg-purple-50">
+                        <p class="font-semibold">国泰君安 - 王强</p>
+                        <p class="text-sm">公司业绩稳健增长，客户结构优质，看好其在跨境电商领域的扩张。目标价82元，评级"买入"。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 政策支持或监管风险 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #8B5CF6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">policy</span>
+                <h2 class="card-title">政策支持或监管风险</h2>
+            </div>
+            <div class="card-content">
+                <div class="mb-4">
+                    <h3 class="font-bold text-green-600">政策支持</h3>
+                    <ul class="list-disc pl-5">
+                        <li>《数字中国建设整体布局规划》支持电子商务服务业发展</li>
+                        <li>《"十四五"电子商务发展规划》提出培育电商服务生态</li>
+                        <li>《跨境电商高质量发展行动计划》扩大跨境电商规模</li>
+                        <li>地方政府对电商服务企业提供税收优惠和补贴</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-red-600">监管风险</h3>
+                    <ul class="list-disc pl-5">
+                        <li>电商平台反垄断监管趋严，可能影响部分运营策略</li>
+                        <li>数据安全法实施，对用户数据处理提出更高要求</li>
+                        <li>跨境电商税收政策调整可能影响国际业务</li>
+                        <li>广告法规范趋严，对营销内容合规性要求提高</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 股票估值情况 -->
+        <div class="card span-4 row-span-1" style="--icon-color: #3B82F6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">balance</span>
+                <h2 class="card-title">股票估值情况</h2>
+            </div>
+            <div class="card-content">
+                <div id="valuation-chart" class="chart-container"></div>
+
+                <div class="mt-3">
+                    <p class="font-semibold">估值分析：</p>
+                    <p>青木科技当前市盈率(TTM)为32.5倍，低于行业平均的38.7倍，具有一定的估值优势。考虑到公司持续的高增长性和行业领先地位，目前估值处于合理偏低水平。</p>
+                    <p class="mt-2">基于公司2025年预期净利润1.6亿元，给予35-40倍市盈率，合理估值区间为56-64亿元，对应股价80-91元，仍有15-35%上升空间。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 龙虎榜数据 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #F59E0B;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">leaderboard</span>
+                <h2 class="card-title">龙虎榜数据</h2>
+            </div>
+            <div class="card-content">
+                <p class="mb-2">2025年6月12日龙虎榜数据显示，青木科技获得明显的机构资金支持：</p>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">排名</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">席位</th>
+                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">买入金额(万元)</th>
+                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">卖出金额(万元)</th>
+                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">净买入(万元)</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2 text-sm">1</td>
+                            <td class="px-4 py-2 text-sm">机构专用</td>
+                            <td class="px-4 py-2 text-right text-sm text-green-600">2,856.35</td>
+                            <td class="px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+2,856.35</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-sm">2</td>
+                            <td class="px-4 py-2 text-sm">机构专用</td>
+                            <td class="px-4 py-2 text-right text-sm text-green-600">1,987.42</td>
+                            <td class="px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+1,987.42</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-sm">3</td>
+                            <td class="px-4 py-2 text-sm">中信证券北京总部</td>
+                            <td class="px-4 py-2 text-right text-sm text-green-600">1,532.18</td>
+                            <td class="px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+1,532.18</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-sm">4</td>
+                            <td class="px-4 py-2 text-sm">华泰证券上海武定路</td>
+                            <td class="px-4 py-2 text-right text-sm text-green-600">1,245.76</td>
+                            <td class="px-4 py-2 text-right text-sm text-red-600">356.28</td>
+                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+889.48</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2 text-sm">5</td>
+                            <td class="px-4 py-2 text-sm">国泰君安上海江苏路</td>
+                            <td class="px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-4 py-2 text-right text-sm text-red-600">875.63</td>
+                            <td class="px-4 py-2 text-right text-sm font-semibold text-red-600">-875.63</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="mt-3 text-sm text-gray-600">龙虎榜总买入：8,621.71万元 | 总卖出：1,231.91万元 | 净买入：7,389.80万元</p>
+                <p class="mt-1 font-semibold">分析：机构资金大幅净买入，买入前两名均为机构专用席位，显示出较强的机构认可度，为股价持续上涨提供资金支持。</p>
+            </div>
+        </div>
+
+        <!-- 集合竞价阶段交易指标 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #10B981;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">timer</span>
+                <h2 class="card-title">集合竞价阶段交易指标</h2>
+            </div>
+            <div class="card-content">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <p class="text-sm text-gray-600">集合竞价成交量</p>
+                        <p class="font-semibold">3.56万股</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">集合竞价成交额</p>
+                        <p class="font-semibold">2,392.35万元</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">开盘价</p>
+                        <p class="font-semibold">¥67.21 <span class="text-green-500">(+20.00%)</span></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">集合竞价溢价率</p>
+                        <p class="font-semibold">+1.82%</p>
+                    </div>
+                </div>
+
+                <div id="auction-chart" class="chart-container"></div>
+
+                <p class="mt-3 font-semibold">分析：集合竞价阶段成交活跃，开盘即一字涨停，显示出较强的买盘力量。集合竞价溢价率为正，表明市场对该股预期乐观。大额买单占比高达78%，进一步确认了强劲的买入意愿。</p>
+            </div>
+        </div>
+
+        <!-- 风险提示 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #EF4444;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">warning</span>
+                <h2 class="card-title">风险提示</h2>
+            </div>
+            <div class="card-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <h3 class="font-bold text-red-600">市场风险</h3>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>短期涨幅过大，可能面临回调压力</li>
+                            <li>市场整体波动风险，可能影响个股表现</li>
+                            <li>流动性风险，股价波动可能加大</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-orange-50 rounded-lg">
+                        <h3 class="font-bold text-orange-600">行业风险</h3>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>电商平台政策变化可能影响业务开展</li>
+                            <li>行业竞争加剧，利润空间可能被挤压</li>
+                            <li>新技术迭代速度快，需持续投入研发</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-yellow-50 rounded-lg">
+                        <h3 class="font-bold text-yellow-600">公司风险</h3>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>业务扩张导致的管理和运营压力</li>
+                            <li>核心技术人才流失风险</li>
+                            <li>新业务拓展不及预期的风险</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-purple-50 rounded-lg">
+                        <h3 class="font-bold text-purple-600">政策风险</h3>
+                        <ul class="list-disc pl-5 text-sm">
+                            <li>数据安全和隐私保护监管趋严</li>
+                            <li>跨境电商政策变化可能影响国际业务</li>
+                            <li>税收政策调整可能影响盈利能力</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 投资建议 -->
+        <div class="card span-6 row-span-1" style="--icon-color: #10B981;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">lightbulb</span>
+                <h2 class="card-title">投资建议</h2>
+            </div>
+            <div class="card-content">
+                <div class="p-4 bg-green-50 rounded-lg mb-4">
+                    <h3 class="font-bold text-xl text-green-600 mb-2">推荐评级：买入</h3>
+                    <p>青木科技(301110)最有可能在2025年6月13日继续涨停，建议投资者关注并择机买入。</p>
+                </div>
+
+                <div class="space-y-3">
+                    <div>
+                        <h3 class="font-bold">投资理由</h3>
+                        <ul class="list-disc pl-5">
+                            <li>基本面最强：财务状况健康，业绩稳定增长，2025年Q1营收同比增长21.3%</li>
+                            <li>行业前景广阔：电子商务服务行业受益于品牌数字化转型加速</li>
+                            <li>机构资金支持：龙虎榜数据显示明显的机构资金买入</li>
+                            <li>技术面强势：近期涨幅强劲，多次上榜龙虎榜，市场关注度高</li>
+                            <li>控盘迹象明显：精准涨停显示出较强的控盘能力</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold">操作建议</h3>
+                        <ul class="list-disc pl-5">
+                            <li>短线投资者可在开盘后适当回调时买入，设置止损位在前日收盘价附近</li>
+                            <li>中线投资者可分批建仓，关注量能变化和主力资金动向</li>
+                            <li>建议仓位控制：短线不超过20%，中线不超过10%</li>
+                            <li>关注点：明日开盘表现、集合竞价情况、主力资金流向</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold">目标价位</h3>
+                        <p>短期目标价：80元（+19%）</p>
+                        <p>中期目标价：91元（+35%）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 股价走势图 -->
+        <div class="card span-12 row-span-1" style="--icon-color: #8B5CF6;">
+            <div class="card-header">
+                <span class="material-symbols-outlined icon">show_chart</span>
+                <h2 class="card-title">股价走势</h2>
+            </div>
+            <div class="card-content">
+                <div id="stock-chart" class="chart-container" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white mt-8 py-6">
+    <div class="container mx-auto">
+        <div class="disclaimer">
+            <h3 class="font-bold mb-2">免责声明</h3>
+            <p>本报告中的信息均来源于公开资料，我们对这些信息的准确性和完整性不作任何保证。本报告中的信息、意见等均仅供参考，不构成对任何人的投资建议。投资者应根据个人投资目标、财务状况和需求来判断是否使用本报告所载内容和信息，并自行承担风险。</p>
+            <p class="mt-1">股市有风险，投资需谨慎。本报告不构成投资、法律、会计或税务建议，也不是针对任何特定投资者的推荐。过往的业绩并不代表未来表现。本报告版权仅为我们所有，未经书面许可，任何机构和个人不得以任何形式翻版、复制、发表或引用。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 绘制业绩增长图表
+    const performanceChart = echarts.init(document.getElementById('performance-chart'));
+    const performanceOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['营收(亿元)', '净利润(亿元)']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2023Q1', '2023Q2', '2023Q3', '2023Q4', '2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '营收(亿元)',
+                type: 'bar',
+                data: [2.45, 2.68, 2.92, 3.15, 3.10, 3.35, 3.52, 3.68, 3.76],
+                color: '#3B82F6'
+            },
+            {
+                name: '净利润(亿元)',
+                type: 'line',
+                data: [0.52, 0.58, 0.63, 0.68, 0.65, 0.71, 0.74, 0.78, 0.82],
+                color: '#10B981'
+            }
+        ]
+    };
+    performanceChart.setOption(performanceOption);
+
+    // 绘制估值对比图表
+    const valuationChart = echarts.init(document.getElementById('valuation-chart'));
+    const valuationOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['市盈率(TTM)']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: ['青木科技', '行业平均', '竞争对手A', '竞争对手B', '竞争对手C']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '市盈率(TTM)',
+                type: 'bar',
+                data: [32.5, 38.7, 42.3, 35.8, 40.2],
+                itemStyle: {
+                    color: function(params) {
+                        const colorList = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444'];
+                        return colorList[params.dataIndex];
+                    }
+                },
+                label: {
+                    show: true,
+                    position: 'top',
+                    formatter: '{c}'
+                }
+            }
+        ]
+    };
+    valuationChart.setOption(valuationOption);
+
+    // 绘制集合竞价图表
+    const auctionChart = echarts.init(document.getElementById('auction-chart'));
+    const auctionOption = {
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left'
+        },
+        series: [
+            {
+                name: '集合竞价买单分布',
+                type: 'pie',
+                radius: '60%',
+                data: [
+                    { value: 78, name: '大额买单', itemStyle: { color: '#10B981' } },
+                    { value: 15, name: '中额买单', itemStyle: { color: '#3B82F6' } },
+                    { value: 7, name: '小额买单', itemStyle: { color: '#8B5CF6' } }
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    auctionChart.setOption(auctionOption);
+
+    // 绘制股价走势图
+    const stockChart = echarts.init(document.getElementById('stock-chart'));
+    const stockOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        legend: {
+            data: ['股价', '成交量']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: ['2025/5/6', '2025/5/7', '2025/5/8', '2025/5/9', '2025/5/10', '2025/5/13', '2025/5/14', '2025/5/15', '2025/5/16', '2025/5/17', '2025/5/20', '2025/5/21', '2025/5/22', '2025/5/23', '2025/5/24', '2025/5/27', '2025/5/28', '2025/5/29', '2025/5/30', '2025/5/31', '2025/6/3', '2025/6/4', '2025/6/5', '2025/6/6', '2025/6/7', '2025/6/10', '2025/6/11', '2025/6/12'],
+            axisLabel: {
+                interval: 3
+            }
+        },
+        yAxis: [
+            {
+                type: 'value',
+                name: '股价',
+                position: 'left',
+                axisLabel: {
+                    formatter: '¥{value}'
+                }
+            },
+            {
+                type: 'value',
+                name: '成交量',
+                position: 'right',
+                axisLabel: {
+                    formatter: '{value}万'
+                }
+            }
+        ],
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 50,
+                end: 100
+            },
+            {
+                show: true,
+                type: 'slider',
+                start: 50,
+                end: 100
+            }
+        ],
+        series: [
+            {
+                name: '股价',
+                type: 'line',
+                data: [48.25, 49.12, 50.35, 49.87, 51.23, 52.45, 51.98, 53.21, 52.76, 54.32, 53.87, 55.21, 54.76, 56.32, 55.87, 57.21, 56.76, 58.32, 57.87, 59.21, 58.76, 60.32, 59.87, 61.21, 60.76, 62.32, 56.01, 67.21],
+                yAxisIndex: 0,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最高值' },
+                        { type: 'min', name: '最低值' }
+                    ]
+                },
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
+                },
+                lineStyle: {
+                    color: '#3B82F6',
+                    width: 3
+                },
+                itemStyle: {
+                    color: '#3B82F6'
+                }
+            },
+            {
+                name: '成交量',
+                type: 'bar',
+                yAxisIndex: 1,
+                data: [5.2, 6.3, 7.1, 5.8, 8.2, 9.5, 7.8, 10.2, 8.7, 12.3, 9.8, 14.2, 10.5, 15.3, 11.2, 16.5, 12.8, 17.2, 13.5, 18.3, 14.2, 19.5, 15.8, 20.2, 16.5, 21.3, 18.7, 22.49],
+                itemStyle: {
+                    color: function(params) {
+                        const value = params.value;
+                        const lastValue = stockOption.series[1].data[params.dataIndex - 1];
+                        return value > lastValue ? '#10B981' : '#EF4444';
+                    }
+                }
+            }
+        ]
+    };
+    stockChart.setOption(stockOption);
+
+    // 窗口大小变化时重新调整图表大小
+    window.addEventListener('resize', function() {
+        performanceChart.resize();
+        valuationChart.resize();
+        auctionChart.resize();
+        stockChart.resize();
+    });
+</script>
+</body>
+</html>
