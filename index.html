@@ -221,7 +221,7 @@
             <div class="flex items-center space-x-4">
               <button class="like-btn flex items-center text-gray-500 hover:text-primary transition-colors" data-report-id="report1">
                 <i class="fa fa-thumbs-o-up mr-1"></i>
-                <span class="like-count">9</span>
+                <span class="like-count">5</span>
               </button>
               <button class="comment-btn flex items-center text-gray-500 hover:text-primary transition-colors" data-report-id="report1">
                 <i class="fa fa-comment-o mr-1"></i>
@@ -259,7 +259,7 @@
               </button>
               <button class="comment-btn flex items-center text-gray-500 hover:text-primary transition-colors" data-report-id="report2">
                 <i class="fa fa-comment-o mr-1"></i>
-                <span class="comment-count">0</span>
+                <span class="comment-count">1</span>
               </button>
             </div>
           </div>
@@ -630,7 +630,7 @@
                         </a>
                     </div>
                 `,
-      likes: 6,
+      likes: 5,
       comments: [
         {
           id: 1,
@@ -665,8 +665,15 @@
                         </a>
                     </div>
                 `,
-      likes: 9,
+      likes: 6,
       comments: [
+        {
+          id: 1,
+          name: "游客",
+          avatar: "https://picsum.photos/seed/user1/40/40",
+          date: "2025-06-12",
+          content: "分析得挺准得，今天就涨停了，感觉后续还有空间"
+        },
       ]
     },
     'report3': {
@@ -688,13 +695,6 @@
                 `,
       likes: 11,
       comments: [
-        {
-          id: 1,
-          name: "游客",
-          avatar: "https://picsum.photos/seed/user1/40/40",
-          date: "2025-06-12",
-          content: "分析得挺准得，今天就涨停了，感觉后续还有空间"
-        },
       ]
     }
   };
