@@ -36,15 +36,6 @@
             color: #1F2937;
         }
 
-        /* 自定义媒体查询 */
-        @media (max-width: 640px) {
-            .prose a {
-                font-size: 16px;
-                display: block;
-                margin-bottom: 10px;
-            }
-        }
-
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -186,46 +177,160 @@
         .row-span-2 { grid-row: span 2 / span 2; }
         .row-span-3 { grid-row: span 3 / span 3; }
 
-        /* 响应式调整 */
+        /* 响应式调整 - 增强版 */
         @media (max-width: 1024px) {
             .bento-grid {
                 grid-template-columns: repeat(6, 1fr);
+                gap: 0.75rem;
+                padding: 0.75rem;
             }
 
             .span-4, .span-5, .span-6, .span-7, .span-8 {
                 grid-column: span 6 / span 6;
             }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 0.75rem;
+                padding: 0.75rem;
+            }
+
+            .span-3, .span-4, .span-5, .span-6 {
+                grid-column: span 6 / span 6;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .card-header .icon {
+                font-size: 1.25rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-content {
+                font-size: 0.9rem;
+            }
+
+            .stock-price {
+                font-size: 1.75rem;
+            }
+
+            .chart-container {
+                height: 220px;
+            }
         }
 
         @media (max-width: 640px) {
             .bento-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(6, 1fr);
+                gap: 0.5rem;
+                padding: 0.5rem;
             }
 
             .span-2, .span-3, .span-4, .span-5, .span-6 {
-                grid-column: span 3 / span 3;
+                grid-column: span 6 / span 6;
+            }
+        }
+
+        /* 添加小屏幕手机的适配 */
+        @media (max-width: 480px) {
+            .bento-grid {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            .span-1, .span-2, .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-9, .span-10, .span-11, .span-12 {
+                grid-column: span 1 / span 1;
+            }
+
+            .card {
+                padding: 0.875rem;
+            }
+
+            .card-header {
+                margin-bottom: 0.5rem;
+            }
+
+            .card-header .icon {
+                font-size: 1.125rem;
+                margin-right: 0.5rem;
+            }
+
+            .card-title {
+                font-size: 0.95rem;
+            }
+
+            .card-content {
+                font-size: 0.85rem;
+            }
+
+            .stock-price {
+                font-size: 1.5rem;
+            }
+
+            .chart-container {
+                height: 200px;
+            }
+
+            header .text-2xl {
+                font-size: 1.25rem;
+            }
+
+            .date-badge {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+            }
+
+            /* 表格在小屏幕上的优化 */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 优化小屏幕上的网格布局 */
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 <header class="bg-white p-4 shadow-md sticky top-0 z-10">
-    <div class="container mx-auto flex justify-between items-center">
-        <div class="flex items-center">
-            <img src="https://p3-search.byteimg.com/obj/labis/516c2f20dc5c7a444fb7af3604251610" alt="青木科技Logo" class="h-12 mr-4">
+    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+        <div class="flex items-center mb-2 sm:mb-0">
+            <img src="https://img.qichacha.com/product/fa/8e/fa8e2a1d3e9ad4c9f4f5d1d5e0f8c4d3.jpg" alt="青木科技Logo" class="h-10 sm:h-12 mr-3 sm:mr-4">
             <div>
-                <h1 class="text-2xl font-bold">青木科技 <span class="text-gray-500">301110</span></h1>
-                <p class="text-sm text-gray-600">互联网和相关服务-电子商务B2B</p>
+                <h1 class="text-xl sm:text-2xl font-bold">青木科技 <span class="text-gray-500">301110</span></h1>
+                <p class="text-xs sm:text-sm text-gray-600">互联网和相关服务-电子商务B2B</p>
             </div>
         </div>
         <div class="date-badge">
-            <span class="material-symbols-outlined align-middle mr-1">calendar_today</span>
+            <span class="material-symbols-outlined align-middle mr-1 text-sm sm:text-base">calendar_today</span>
             推荐日期：2025年6月12日
         </div>
     </div>
 </header>
 
-<main class="container mx-auto my-6">
+<main class="container mx-auto my-4 sm:my-6">
     <div class="bento-grid">
         <!-- 股票基本信息卡片 -->
         <div class="card span-4 row-span-1" style="--icon-color: #3B82F6;">
@@ -244,7 +349,7 @@
                         <p class="stock-price stock-change-positive">+20.00%</p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-2 sm:gap-2">
                     <div>
                         <p class="text-sm text-gray-600">成交量</p>
                         <p class="font-semibold">22.49万股</p>
@@ -311,7 +416,7 @@
 
                 <div class="mt-4">
                     <h3 class="font-bold text-lg mb-2">财务状况</h3>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
                             <p class="text-sm text-gray-600">2025年Q1营收</p>
                             <p class="font-semibold">3.76亿元 <span class="text-green-500">+21.3% YoY</span></p>
@@ -356,19 +461,19 @@
             </div>
             <div class="card-content">
                 <div class="flex flex-wrap">
-                    <div class="w-full md:w-1/2 mb-4">
+                    <div class="w-full sm:w-1/2 mb-3 sm:mb-4">
                         <h3 class="font-bold">张明 | CEO兼创始人</h3>
                         <p class="text-sm">电子商务行业资深专家，曾任阿里巴巴高级产品经理，拥有15年电商运营经验</p>
                     </div>
-                    <div class="w-full md:w-1/2 mb-4">
+                    <div class="w-full sm:w-1/2 mb-3 sm:mb-4">
                         <h3 class="font-bold">李强 | CTO</h3>
                         <p class="text-sm">前百度技术专家，计算机科学博士，主导开发公司核心电商数据分析系统</p>
                     </div>
-                    <div class="w-full md:w-1/2 mb-4">
+                    <div class="w-full sm:w-1/2 mb-3 sm:mb-4">
                         <h3 class="font-bold">王芳 | COO</h3>
                         <p class="text-sm">前京东物流高管，拥有丰富的供应链管理经验，负责公司运营体系建设</p>
                     </div>
-                    <div class="w-full md:w-1/2 mb-4">
+                    <div class="w-full sm:w-1/2 mb-3 sm:mb-4">
                         <h3 class="font-bold">赵伟 | CFO</h3>
                         <p class="text-sm">注册会计师，曾任毕马威高级经理，拥有丰富的资本市场经验</p>
                     </div>
@@ -388,7 +493,7 @@
                 <h2 class="card-title">核心产品/技术的竞争力</h2>
             </div>
             <div class="card-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div class="bg-gray-50 p-3 rounded-lg">
                         <h3 class="font-bold text-primary">OmniChannel电商运营平台</h3>
                         <p class="text-sm">一站式多渠道电商运营管理系统，支持天猫、京东、抖音等20+平台统一管理，市场份额领先</p>
@@ -507,52 +612,52 @@
             <div class="card-content">
                 <p class="mb-2">2025年6月12日龙虎榜数据显示，青木科技获得明显的机构资金支持：</p>
 
-                <div class="overflow-x-auto">
+                <div class="table-container overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">排名</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">席位</th>
-                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">买入金额(万元)</th>
-                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">卖出金额(万元)</th>
-                            <th class="px-4 py-2 text-right text-sm font-semibold text-gray-600">净买入(万元)</th>
+                            <th class="px-2 sm:px-4 py-2 text-left text-sm font-semibold text-gray-600">排名</th>
+                            <th class="px-2 sm:px-4 py-2 text-left text-sm font-semibold text-gray-600">席位</th>
+                            <th class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-gray-600">买入金额(万元)</th>
+                            <th class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-gray-600">卖出金额(万元)</th>
+                            <th class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-gray-600">净买入(万元)</th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                         <tr>
-                            <td class="px-4 py-2 text-sm">1</td>
-                            <td class="px-4 py-2 text-sm">机构专用</td>
-                            <td class="px-4 py-2 text-right text-sm text-green-600">2,856.35</td>
-                            <td class="px-4 py-2 text-right text-sm">0.00</td>
-                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+2,856.35</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">1</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">机构专用</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-green-600">2,856.35</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-green-600">+2,856.35</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2 text-sm">2</td>
-                            <td class="px-4 py-2 text-sm">机构专用</td>
-                            <td class="px-4 py-2 text-right text-sm text-green-600">1,987.42</td>
-                            <td class="px-4 py-2 text-right text-sm">0.00</td>
-                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+1,987.42</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">2</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">机构专用</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-green-600">1,987.42</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-green-600">+1,987.42</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2 text-sm">3</td>
-                            <td class="px-4 py-2 text-sm">中信证券北京总部</td>
-                            <td class="px-4 py-2 text-right text-sm text-green-600">1,532.18</td>
-                            <td class="px-4 py-2 text-right text-sm">0.00</td>
-                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+1,532.18</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">3</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">中信证券北京总部</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-green-600">1,532.18</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-green-600">+1,532.18</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2 text-sm">4</td>
-                            <td class="px-4 py-2 text-sm">华泰证券上海武定路</td>
-                            <td class="px-4 py-2 text-right text-sm text-green-600">1,245.76</td>
-                            <td class="px-4 py-2 text-right text-sm text-red-600">356.28</td>
-                            <td class="px-4 py-2 text-right text-sm font-semibold text-green-600">+889.48</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">4</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">华泰证券上海武定路</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-green-600">1,245.76</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-red-600">356.28</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-green-600">+889.48</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-2 text-sm">5</td>
-                            <td class="px-4 py-2 text-sm">国泰君安上海江苏路</td>
-                            <td class="px-4 py-2 text-right text-sm">0.00</td>
-                            <td class="px-4 py-2 text-right text-sm text-red-600">875.63</td>
-                            <td class="px-4 py-2 text-right text-sm font-semibold text-red-600">-875.63</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">5</td>
+                            <td class="px-2 sm:px-4 py-2 text-sm">国泰君安上海江苏路</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm">0.00</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm text-red-600">875.63</td>
+                            <td class="px-2 sm:px-4 py-2 text-right text-sm font-semibold text-red-600">-875.63</td>
                         </tr>
                         </tbody>
                     </table>
@@ -570,7 +675,7 @@
                 <h2 class="card-title">集合竞价阶段交易指标</h2>
             </div>
             <div class="card-content">
-                <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                     <div>
                         <p class="text-sm text-gray-600">集合竞价成交量</p>
                         <p class="font-semibold">3.56万股</p>
@@ -602,7 +707,7 @@
                 <h2 class="card-title">风险提示</h2>
             </div>
             <div class="card-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div class="p-3 bg-red-50 rounded-lg">
                         <h3 class="font-bold text-red-600">市场风险</h3>
                         <ul class="list-disc pl-5 text-sm">
@@ -646,8 +751,8 @@
                 <h2 class="card-title">投资建议</h2>
             </div>
             <div class="card-content">
-                <div class="p-4 bg-green-50 rounded-lg mb-4">
-                    <h3 class="font-bold text-xl text-green-600 mb-2">推荐评级：买入</h3>
+                <div class="p-3 sm:p-4 bg-green-50 rounded-lg mb-3 sm:mb-4">
+                    <h3 class="font-bold text-lg sm:text-xl text-green-600 mb-2">推荐评级：买入</h3>
                     <p>青木科技(301110)最有可能在2025年6月13日继续涨停，建议投资者关注并择机买入。</p>
                 </div>
 
@@ -689,14 +794,14 @@
                 <h2 class="card-title">股价走势</h2>
             </div>
             <div class="card-content">
-                <div id="stock-chart" class="chart-container" style="height: 400px;"></div>
+                <div id="stock-chart" class="chart-container" style="height: 300px; max-height: 50vh;"></div>
             </div>
         </div>
     </div>
 </main>
 
-<footer class="bg-white mt-8 py-6">
-    <div class="container mx-auto">
+<footer class="bg-white mt-6 sm:mt-8 py-4 sm:py-6">
+    <div class="container mx-auto px-4">
         <div class="disclaimer">
             <h3 class="font-bold mb-2">免责声明</h3>
             <p>本报告中的信息均来源于公开资料，我们对这些信息的准确性和完整性不作任何保证。本报告中的信息、意见等均仅供参考，不构成对任何人的投资建议。投资者应根据个人投资目标、财务状况和需求来判断是否使用本报告所载内容和信息，并自行承担风险。</p>
@@ -716,7 +821,10 @@
             }
         },
         legend: {
-            data: ['营收(亿元)', '净利润(亿元)']
+            data: ['营收(亿元)', '净利润(亿元)'],
+            textStyle: {
+                fontSize: window.innerWidth < 480 ? 10 : 12
+            }
         },
         grid: {
             left: '3%',
@@ -726,10 +834,17 @@
         },
         xAxis: {
             type: 'category',
-            data: ['2023Q1', '2023Q2', '2023Q3', '2023Q4', '2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1']
+            data: ['2023Q1', '2023Q2', '2023Q3', '2023Q4', '2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1'],
+            axisLabel: {
+                fontSize: window.innerWidth < 480 ? 9 : 11,
+                interval: window.innerWidth < 480 ? 2 : 0
+            }
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+                fontSize: window.innerWidth < 480 ? 9 : 11
+            }
         },
         series: [
             {
@@ -758,7 +873,10 @@
             }
         },
         legend: {
-            data: ['市盈率(TTM)']
+            data: ['市盈率(TTM)'],
+            textStyle: {
+                fontSize: window.innerWidth < 480 ? 10 : 12
+            }
         },
         grid: {
             left: '3%',
@@ -768,10 +886,18 @@
         },
         xAxis: {
             type: 'category',
-            data: ['青木科技', '行业平均', '竞争对手A', '竞争对手B', '竞争对手C']
+            data: ['青木科技', '行业平均', '竞争对手A', '竞争对手B', '竞争对手C'],
+            axisLabel: {
+                fontSize: window.innerWidth < 480 ? 9 : 11,
+                interval: 0,
+                rotate: window.innerWidth < 480 ? 30 : 0
+            }
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+                fontSize: window.innerWidth < 480 ? 9 : 11
+            }
         },
         series: [
             {
@@ -787,7 +913,8 @@
                 label: {
                     show: true,
                     position: 'top',
-                    formatter: '{c}'
+                    formatter: '{c}',
+                    fontSize: window.innerWidth < 480 ? 9 : 11
                 }
             }
         ]
@@ -801,19 +928,27 @@
             trigger: 'item'
         },
         legend: {
-            orient: 'vertical',
-            left: 'left'
+            orient: window.innerWidth < 480 ? 'horizontal' : 'vertical',
+            left: window.innerWidth < 480 ? 'center' : 'left',
+            bottom: window.innerWidth < 480 ? '0' : 'auto',
+            textStyle: {
+                fontSize: window.innerWidth < 480 ? 10 : 12
+            }
         },
         series: [
             {
                 name: '集合竞价买单分布',
                 type: 'pie',
-                radius: '60%',
+                radius: window.innerWidth < 480 ? '50%' : '60%',
+                center: window.innerWidth < 480 ? ['50%', '40%'] : ['50%', '50%'],
                 data: [
                     { value: 78, name: '大额买单', itemStyle: { color: '#10B981' } },
                     { value: 15, name: '中额买单', itemStyle: { color: '#3B82F6' } },
                     { value: 7, name: '小额买单', itemStyle: { color: '#8B5CF6' } }
                 ],
+                label: {
+                    fontSize: window.innerWidth < 480 ? 9 : 11
+                },
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,
@@ -836,19 +971,24 @@
             }
         },
         legend: {
-            data: ['股价', '成交量']
+            data: ['股价', '成交量'],
+            textStyle: {
+                fontSize: window.innerWidth < 480 ? 10 : 12
+            }
         },
         grid: {
             left: '3%',
             right: '4%',
-            bottom: '15%',
+            bottom: window.innerWidth < 480 ? '20%' : '15%',
             containLabel: true
         },
         xAxis: {
             type: 'category',
             data: ['2025/5/6', '2025/5/7', '2025/5/8', '2025/5/9', '2025/5/10', '2025/5/13', '2025/5/14', '2025/5/15', '2025/5/16', '2025/5/17', '2025/5/20', '2025/5/21', '2025/5/22', '2025/5/23', '2025/5/24', '2025/5/27', '2025/5/28', '2025/5/29', '2025/5/30', '2025/5/31', '2025/6/3', '2025/6/4', '2025/6/5', '2025/6/6', '2025/6/7', '2025/6/10', '2025/6/11', '2025/6/12'],
             axisLabel: {
-                interval: 3
+                interval: window.innerWidth < 480 ? 5 : 3,
+                fontSize: window.innerWidth < 480 ? 9 : 11,
+                rotate: window.innerWidth < 480 ? 45 : 0
             }
         },
         yAxis: [
@@ -857,7 +997,11 @@
                 name: '股价',
                 position: 'left',
                 axisLabel: {
-                    formatter: '¥{value}'
+                    formatter: '¥{value}',
+                    fontSize: window.innerWidth < 480 ? 9 : 11
+                },
+                nameTextStyle: {
+                    fontSize: window.innerWidth < 480 ? 9 : 11
                 }
             },
             {
@@ -865,7 +1009,11 @@
                 name: '成交量',
                 position: 'right',
                 axisLabel: {
-                    formatter: '{value}万'
+                    formatter: '{value}万',
+                    fontSize: window.innerWidth < 480 ? 9 : 11
+                },
+                nameTextStyle: {
+                    fontSize: window.innerWidth < 480 ? 9 : 11
                 }
             }
         ],
@@ -879,7 +1027,10 @@
                 show: true,
                 type: 'slider',
                 start: 50,
-                end: 100
+                end: 100,
+                textStyle: {
+                    fontSize: window.innerWidth < 480 ? 9 : 11
+                }
             }
         ],
         series: [
@@ -892,12 +1043,18 @@
                     data: [
                         { type: 'max', name: '最高值' },
                         { type: 'min', name: '最低值' }
-                    ]
+                    ],
+                    label: {
+                        fontSize: window.innerWidth < 480 ? 9 : 11
+                    }
                 },
                 markLine: {
                     data: [
                         { type: 'average', name: '平均值' }
-                    ]
+                    ],
+                    label: {
+                        fontSize: window.innerWidth < 480 ? 9 : 11
+                    }
                 },
                 lineStyle: {
                     color: '#3B82F6',
@@ -926,10 +1083,84 @@
 
     // 窗口大小变化时重新调整图表大小
     window.addEventListener('resize', function() {
+        // 更新图表大小
         performanceChart.resize();
         valuationChart.resize();
         auctionChart.resize();
         stockChart.resize();
+
+        // 更新图表配置以适应不同屏幕尺寸
+        if (window.innerWidth < 480) {
+            // 小屏幕设置
+            performanceOption.xAxis.axisLabel.interval = 2;
+            performanceOption.legend.textStyle.fontSize = 10;
+            performanceOption.xAxis.axisLabel.fontSize = 9;
+            performanceOption.yAxis.axisLabel.fontSize = 9;
+
+            valuationOption.xAxis.axisLabel.rotate = 30;
+            valuationOption.legend.textStyle.fontSize = 10;
+            valuationOption.xAxis.axisLabel.fontSize = 9;
+            valuationOption.yAxis.axisLabel.fontSize = 9;
+            valuationOption.series[0].label.fontSize = 9;
+
+            auctionOption.legend.orient = 'horizontal';
+            auctionOption.legend.left = 'center';
+            auctionOption.legend.bottom = '0';
+            auctionOption.legend.textStyle.fontSize = 10;
+            auctionOption.series[0].radius = '50%';
+            auctionOption.series[0].center = ['50%', '40%'];
+            auctionOption.series[0].label.fontSize = 9;
+
+            stockOption.xAxis.axisLabel.interval = 5;
+            stockOption.xAxis.axisLabel.rotate = 45;
+            stockOption.legend.textStyle.fontSize = 10;
+            stockOption.xAxis.axisLabel.fontSize = 9;
+            stockOption.yAxis[0].axisLabel.fontSize = 9;
+            stockOption.yAxis[1].axisLabel.fontSize = 9;
+            stockOption.yAxis[0].nameTextStyle.fontSize = 9;
+            stockOption.yAxis[1].nameTextStyle.fontSize = 9;
+            stockOption.dataZoom[1].textStyle.fontSize = 9;
+            stockOption.series[0].markPoint.label.fontSize = 9;
+            stockOption.series[0].markLine.label.fontSize = 9;
+        } else {
+            // 大屏幕设置
+            performanceOption.xAxis.axisLabel.interval = 0;
+            performanceOption.legend.textStyle.fontSize = 12;
+            performanceOption.xAxis.axisLabel.fontSize = 11;
+            performanceOption.yAxis.axisLabel.fontSize = 11;
+
+            valuationOption.xAxis.axisLabel.rotate = 0;
+            valuationOption.legend.textStyle.fontSize = 12;
+            valuationOption.xAxis.axisLabel.fontSize = 11;
+            valuationOption.yAxis.axisLabel.fontSize = 11;
+            valuationOption.series[0].label.fontSize = 11;
+
+            auctionOption.legend.orient = 'vertical';
+            auctionOption.legend.left = 'left';
+            auctionOption.legend.bottom = 'auto';
+            auctionOption.legend.textStyle.fontSize = 12;
+            auctionOption.series[0].radius = '60%';
+            auctionOption.series[0].center = ['50%', '50%'];
+            auctionOption.series[0].label.fontSize = 11;
+
+            stockOption.xAxis.axisLabel.interval = 3;
+            stockOption.xAxis.axisLabel.rotate = 0;
+            stockOption.legend.textStyle.fontSize = 12;
+            stockOption.xAxis.axisLabel.fontSize = 11;
+            stockOption.yAxis[0].axisLabel.fontSize = 11;
+            stockOption.yAxis[1].axisLabel.fontSize = 11;
+            stockOption.yAxis[0].nameTextStyle.fontSize = 11;
+            stockOption.yAxis[1].nameTextStyle.fontSize = 11;
+            stockOption.dataZoom[1].textStyle.fontSize = 11;
+            stockOption.series[0].markPoint.label.fontSize = 11;
+            stockOption.series[0].markLine.label.fontSize = 11;
+        }
+
+        // 重新应用更新后的配置
+        performanceChart.setOption(performanceOption);
+        valuationChart.setOption(valuationOption);
+        auctionChart.setOption(auctionOption);
+        stockChart.setOption(stockOption);
     });
 </script>
 </body>
