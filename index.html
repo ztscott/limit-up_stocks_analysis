@@ -665,7 +665,9 @@
                         </a>
                     </div>
                 `,
-      likes: 5
+      likes: 5,
+      comments: [
+      ]
     },
     'report3': {
       title: '全球宏观经济展望',
@@ -684,7 +686,9 @@
                         </a>
                     </div>
                 `,
-      likes: 6
+      likes: 6,
+      comments: [
+      ]
     }
   };
 
@@ -695,23 +699,22 @@
 
     const reportDetail = document.getElementById('report-detail');
     const reportContent = document.querySelector('.report-content')
+    //
+    // let content;
+    // if (report.contentUrl) {
+    //   try {
+    //     // 发起网络请求获取 HTML 文件内容
+    //     const response = await fetch(report.contentUrl);
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     content = await response.text();
+    //   } catch (error) {
+    //     console.error('加载报告内容失败:', error);
+    //     content = '<p>抱歉，无法加载报告内容。</p>';
+    //   }
+    // } else {
 
-    let content;
-    if (report.contentUrl) {
-      try {
-        // 发起网络请求获取 HTML 文件内容
-        const response = await fetch(report.contentUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        content = await response.text();
-      } catch (error) {
-        console.error('加载报告内容失败:', error);
-        content = '<p>抱歉，无法加载报告内容。</p>';
-      }
-    } else {
-      content = report.content;
-    }
 
     // 更新报告内容
     reportContent.innerHTML = `
@@ -739,7 +742,7 @@
                     <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">${report.category}</span>
                 </div>
 
-                ${content}
+                ${report.content}
 
                 <div class="mt-12">
                     <h3 class="text-xl font-bold mb-6">评论 (${report.comments.length})</h3>
