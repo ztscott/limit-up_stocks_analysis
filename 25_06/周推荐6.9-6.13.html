@@ -39,6 +39,7 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
+      height: 100%;
     }
 
     .card:hover {
@@ -48,7 +49,6 @@
 
     .card-header {
       padding: 1.5rem;
-      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
       color: white;
     }
 
@@ -151,34 +151,6 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .tab-container {
-      display: flex;
-      border-bottom: 1px solid #E5E7EB;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      padding: 0.75rem 1.5rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .tab.active {
-      border-bottom: 2px solid var(--primary-color);
-      color: var(--primary-color);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
     .hero-section {
       background: linear-gradient(135deg, #3B82F6, #10B981);
       padding: 3rem 2rem;
@@ -218,14 +190,43 @@
       border-left: 4px solid var(--primary-color);
     }
 
+    .stock-section {
+      margin-bottom: 3rem;
+    }
+
+    .stock-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      color: white;
+    }
+
+    .stock-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .stock-header .stock-code {
+      opacity: 0.8;
+      margin-left: 0.5rem;
+    }
+
+    .stock-header .company-logo {
+      margin-left: auto;
+    }
+
+    .stock-tags {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
     @media (max-width: 768px) {
       .bento-grid {
         grid-template-columns: 1fr;
-      }
-
-      .tab {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
       }
     }
 
@@ -250,6 +251,14 @@
     .delay-300 {
       animation-delay: 0.3s;
     }
+
+    .delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-500 {
+      animation-delay: 0.5s;
+    }
   </style>
 </head>
 <body class="p-4 md:p-8">
@@ -260,40 +269,33 @@
 
 <div class="hero-section animate-fade-in">
   <h2 class="text-2xl md:text-3xl font-bold mb-4">市场大环境与宏观经济趋势</h2>
-  <p class="mb-4">上周（2025年6月9日至6月13日）A股市场整体呈现震荡调整态势，上证指数周跌0.71%，深证成指周跌1.10%，创业板指周跌1.13%。北向资金全周净流出超120亿元，显示外资对A股短期持谨慎态度。</p>
+  <p class="mb-4">上周（2025年6月9日至6月13日）A股市场整体呈现震荡调整态势，上证指数周跌0.25%，深证成指周跌2.1%，创业板指周跌1.8%。北向资金全周净流出超120亿元，显示外资对A股短期持谨慎态度。</p>
   <p class="mb-4">从宏观经济数据来看，5月CPI同比下降0.1%，PPI同比下降3.3%，表明经济面临一定下行压力。但政策面持续发力，央行实施降准降息，政府加大对科技创新和产业升级的支持力度，为市场提供了积极因素。</p>
   <p>行业方面，稀土永磁、医药生物、IP经济等板块表现活跃，新能源、半导体、人工智能等科技板块受到政策支持，具备较好的投资机会。</p>
 </div>
 
-<div class="bento-grid">
-  <!-- 北矿科技 -->
-  <div class="card animate-fade-in delay-100">
-    <div class="card-header flex justify-between items-center">
-      <div>
-        <h3 class="text-2xl font-bold">北矿科技</h3>
-        <p class="text-white/80">600980.SH</p>
-      </div>
-      <img src="https://media.sseinfo.com/roadshow/resources/uploadfileNew/logo/2025-04-09/11cb001e-7238-46f7-92ef-cf830f735e9d.png" alt="北矿科技" class="company-logo">
+<!-- 北矿科技 -->
+<div class="stock-section">
+  <div class="stock-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+    <div>
+      <h2 class="text-2xl font-bold">北矿科技</h2>
+      <p class="text-white/80">600980.SH</p>
     </div>
-    <div class="p-6">
-      <div class="flex flex-wrap mb-4">
-        <span class="tag tag-primary">稀土永磁</span>
-        <span class="tag tag-secondary">新材料</span>
-        <span class="tag tag-accent">连续5板</span>
-      </div>
+    <div class="stock-tags ml-4">
+      <span class="tag tag-primary">稀土永磁</span>
+      <span class="tag tag-secondary">新材料</span>
+      <span class="tag tag-accent">连续5板</span>
+    </div>
+    <img src="https://media.sseinfo.com/roadshow/resources/uploadfileNew/logo/2025-04-09/11cb001e-7238-46f7-92ef-cf830f735e9d.png" alt="北矿科技" class="company-logo">
+  </div>
 
-      <div class="tab-container">
-        <div class="tab active" data-tab="bkjs-info">公司信息</div>
-        <div class="tab" data-tab="bkjs-financial">财务分析</div>
-        <div class="tab" data-tab="bkjs-technical">技术面分析</div>
-        <div class="tab" data-tab="bkjs-capital">资金面分析</div>
-        <div class="tab" data-tab="bkjs-strategy">交易策略</div>
-        <div class="tab" data-tab="bkjs-intraday">盘中应对</div>
-        <div class="tab" data-tab="bkjs-nextday">次日操作</div>
-        <div class="tab" data-tab="bkjs-risk">风险与建议</div>
+  <div class="bento-grid">
+    <!-- 公司信息卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">公司信息</h3>
       </div>
-
-      <div class="tab-content active" id="bkjs-info">
+      <div class="p-6">
         <p class="mb-4">北矿科技是国内领先的稀土永磁材料和矿山装备制造企业，隶属于中国地质科学院矿产综合利用研究所。公司在稀土永磁材料领域拥有多项核心专利，产品性能国内领先。</p>
 
         <div class="section-title">
@@ -311,8 +313,14 @@
         </div>
         <p class="mb-4">公司拥有高性能钕铁硼永磁材料制备技术，产品性能国内领先，已获得45项专利。在重稀土减量化和高矫顽力永磁材料方面具有技术优势，产品已批量应用于新能源汽车和高端装备制造领域。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-financial">
+    <!-- 财务分析卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">财务分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">monitoring</span>财务状况
         </div>
@@ -331,7 +339,7 @@
         </div>
         <div class="data-item">
           <span class="data-label">ROE</span>
-          <span class="data-value data-value-positive">15.8%</span>
+          <span class="data-value data-value-positive">8.5%</span>
         </div>
 
         <div class="chart-container" id="bkjs-chart"></div>
@@ -346,8 +354,14 @@
         </div>
         <p class="mb-4">主流券商一致看好，5家机构给予"买入"评级，2家给予"增持"评级，目标价较当前价格有15%-20%上涨空间。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-technical">
+    <!-- 技术面分析卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">技术面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">analytics</span>主要技术指标
         </div>
@@ -383,15 +397,21 @@
         </div>
         <p class="mb-4">历史数据显示，北矿科技在类似形态下，次日上涨概率为60%，次周上涨概率为80%，次月上涨概率为80%。最可能的表现模式是"短暂回调后上涨"，风险等级中等，机会等级高。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-capital">
+    <!-- 资金面分析卡片 -->
+    <div class="card animate-fade-in delay-400">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">资金面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">account_balance</span>主力资金流向
         </div>
 
         <div class="data-item">
           <span class="data-label">主力资金净流入</span>
-          <span class="data-value data-value-positive">2.85亿元</span>
+          <span class="data-value data-value-positive">2.3亿元</span>
         </div>
         <div class="data-item">
           <span class="data-label">占当日成交额比例</span>
@@ -421,8 +441,14 @@
         </div>
         <p class="mb-4">机构持股比例28.65%，较上期增持5.32%；外资持股比例3.85%，较上期增持0.95%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-strategy">
+    <!-- 交易策略卡片 -->
+    <div class="card animate-fade-in delay-500">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">交易策略</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">login</span>入场时机
         </div>
@@ -448,8 +474,14 @@
         </div>
         <p class="mb-4">预计最佳持仓时间为5-10个交易日，最长持仓不超过15个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-intraday">
+    <!-- 盘中应对卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">盘中应对</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
         </div>
@@ -470,8 +502,14 @@
         </div>
         <p class="mb-4">涨停板敲开后若回封速度快（1分钟内），且封单量大（超过500万股），可继续持有；若回封缓慢或难以回封，应果断止盈离场。若股价能维持在涨幅9%以上，且盘面活跃度高，可持有至尾盘。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-nextday">
+    <!-- 次日操作卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">次日操作</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">arrow_upward</span>高开应对
         </div>
@@ -492,8 +530,14 @@
         </div>
         <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:00-10:30时段的表现，此时段往往决定全天走势。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="bkjs-risk">
+    <!-- 风险与建议卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+        <h3 class="text-xl font-bold">风险与建议</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">policy</span>政策支持与风险
         </div>
@@ -525,35 +569,30 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!-- 易明医药 -->
-  <div class="card animate-fade-in delay-200">
-    <div class="card-header flex justify-between items-center" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
-      <div>
-        <h3 class="text-2xl font-bold">易明医药</h3>
-        <p class="text-white/80">002826.SZ</p>
-      </div>
-      <img src="http://www.emyy.cn/images/logo.png" alt="易明医药" class="company-logo">
+<!-- 易明医药 -->
+<div class="stock-section">
+  <div class="stock-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+    <div>
+      <h2 class="text-2xl font-bold">易明医药</h2>
+      <p class="text-white/80">002826.SZ</p>
     </div>
-    <div class="p-6">
-      <div class="flex flex-wrap mb-4">
-        <span class="tag tag-primary">医药生物</span>
-        <span class="tag tag-secondary">藏药</span>
-        <span class="tag tag-accent">连续5板</span>
-      </div>
+    <div class="stock-tags ml-4">
+      <span class="tag tag-primary">医药生物</span>
+      <span class="tag tag-secondary">藏药</span>
+      <span class="tag tag-accent">连续5板</span>
+    </div>
+    <img src="http://www.emyy.cn/images/logo.png" alt="易明医药" class="company-logo">
+  </div>
 
-      <div class="tab-container">
-        <div class="tab active" data-tab="ymyy-info">公司信息</div>
-        <div class="tab" data-tab="ymyy-financial">财务分析</div>
-        <div class="tab" data-tab="ymyy-technical">技术面分析</div>
-        <div class="tab" data-tab="ymyy-capital">资金面分析</div>
-        <div class="tab" data-tab="ymyy-strategy">交易策略</div>
-        <div class="tab" data-tab="ymyy-intraday">盘中应对</div>
-        <div class="tab" data-tab="ymyy-nextday">次日操作</div>
-        <div class="tab" data-tab="ymyy-risk">风险与建议</div>
+  <div class="bento-grid">
+    <!-- 公司信息卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">公司信息</h3>
       </div>
-
-      <div class="tab-content active" id="ymyy-info">
+      <div class="p-6">
         <p class="mb-4">易明医药是一家专注于藏药研发、生产和销售的医药企业，总部位于西藏。公司拥有多个藏药独家品种，在心脑血管、消化系统等治疗领域具有独特优势。</p>
 
         <div class="section-title">
@@ -571,8 +610,14 @@
         </div>
         <p class="mb-4">公司拥有多个藏药独家品种和专利，如"易明"牌醒脑静颗粒、小儿热速清颗粒等。在藏药材种植、提取和制剂技术方面具有领先优势，建立了完整的藏药产业链。公司还与多家科研院所合作，持续推进藏药现代化研究。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-financial">
+    <!-- 财务分析卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">财务分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">monitoring</span>财务状况
         </div>
@@ -606,8 +651,14 @@
         </div>
         <p class="mb-4">3家券商给予"买入"评级，1家给予"增持"评级，普遍看好公司在民族药领域的发展前景和政策支持带来的机遇。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-technical">
+    <!-- 技术面分析卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">技术面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">analytics</span>主要技术指标
         </div>
@@ -643,15 +694,21 @@
         </div>
         <p class="mb-4">历史数据显示，易明医药在类似形态下，次日上涨概率为40%，次周上涨概率为60%，次月上涨概率为80%。最可能的表现模式是"短暂回调后上涨"，风险等级中高，机会等级中高。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-capital">
+    <!-- 资金面分析卡片 -->
+    <div class="card animate-fade-in delay-400">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">资金面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">account_balance</span>主力资金流向
         </div>
 
         <div class="data-item">
           <span class="data-label">主力资金净流入</span>
-          <span class="data-value data-value-positive">2.25亿元</span>
+          <span class="data-value data-value-positive">1.8亿元</span>
         </div>
         <div class="data-item">
           <span class="data-label">占当日成交额比例</span>
@@ -681,8 +738,14 @@
         </div>
         <p class="mb-4">机构持股比例18.45%，较上期增持4.85%；外资持股比例2.65%，较上期增持0.85%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-strategy">
+    <!-- 交易策略卡片 -->
+    <div class="card animate-fade-in delay-500">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">交易策略</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">login</span>入场时机
         </div>
@@ -708,8 +771,14 @@
         </div>
         <p class="mb-4">预计最佳持仓时间为7-12个交易日，最长持仓不超过20个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-intraday">
+    <!-- 盘中应对卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">盘中应对</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
         </div>
@@ -730,8 +799,14 @@
         </div>
         <p class="mb-4">涨停板敲开后若股价能够维持在涨幅8%以上，且盘面无明显抛压，可持有至尾盘；若跳水明显（跌破涨幅7%），应及时止盈。若打开后成交量迅速放大但股价不升反降，应及时止盈。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-nextday">
+    <!-- 次日操作卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">次日操作</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">arrow_upward</span>高开应对
         </div>
@@ -752,8 +827,14 @@
         </div>
         <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:30-11:00时段的表现，此时段往往决定全天走势。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="ymyy-risk">
+    <!-- 风险与建议卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+        <h3 class="text-xl font-bold">风险与建议</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">policy</span>政策支持与风险
         </div>
@@ -786,35 +867,30 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!-- 德新科技 -->
-  <div class="card animate-fade-in delay-300">
-    <div class="card-header flex justify-between items-center" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
-      <div>
-        <h3 class="text-2xl font-bold">德新科技</h3>
-        <p class="text-white/80">603032.SH</p>
-      </div>
-      <img src="https://gw.alicdn.com/imgextra/i3/TB1gQEENpXXXXbnXVXXwu0bFXXX.png" alt="德新科技" class="company-logo">
+<!-- 德新科技 -->
+<div class="stock-section">
+  <div class="stock-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+    <div>
+      <h2 class="text-2xl font-bold">德新科技</h2>
+      <p class="text-white/80">603032.SH</p>
     </div>
-    <div class="p-6">
-      <div class="flex flex-wrap mb-4">
-        <span class="tag tag-primary">新能源材料</span>
-        <span class="tag tag-secondary">西部地区</span>
-        <span class="tag tag-accent">连续2板</span>
-      </div>
+    <div class="stock-tags ml-4">
+      <span class="tag tag-primary">新能源材料</span>
+      <span class="tag tag-secondary">西部地区</span>
+      <span class="tag tag-accent">连续2板</span>
+    </div>
+    <img src="https://gw.alicdn.com/imgextra/i3/TB1gQEENpXXXXbnXVXXwu0bFXXX.png" alt="德新科技" class="company-logo">
+  </div>
 
-      <div class="tab-container">
-        <div class="tab active" data-tab="dxkj-info">公司信息</div>
-        <div class="tab" data-tab="dxkj-financial">财务分析</div>
-        <div class="tab" data-tab="dxkj-technical">技术面分析</div>
-        <div class="tab" data-tab="dxkj-capital">资金面分析</div>
-        <div class="tab" data-tab="dxkj-strategy">交易策略</div>
-        <div class="tab" data-tab="dxkj-intraday">盘中应对</div>
-        <div class="tab" data-tab="dxkj-nextday">次日操作</div>
-        <div class="tab" data-tab="dxkj-risk">风险与建议</div>
+  <div class="bento-grid">
+    <!-- 公司信息卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">公司信息</h3>
       </div>
-
-      <div class="tab-content active" id="dxkj-info">
+      <div class="p-6">
         <p class="mb-4">德新科技是一家专注于新能源材料研发、生产和销售的高新技术企业，总部位于新疆。公司主要产品包括锂电池电解液添加剂、光伏材料等，在新能源材料领域具有技术和成本优势。</p>
 
         <div class="section-title">
@@ -832,8 +908,14 @@
         </div>
         <p class="mb-4">公司在新能源材料领域拥有38项专利，特别是在电解液添加剂和光伏材料方面具有技术优势。依托新疆地区资源和能源优势，公司产品具有明显的成本优势。已与多家头部新能源企业建立稳定合作关系，产品已批量应用于高端锂电池和光伏组件。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-financial">
+    <!-- 财务分析卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">财务分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">monitoring</span>财务状况
         </div>
@@ -867,8 +949,14 @@
         </div>
         <p class="mb-4">4家券商给予"买入"评级，2家给予"增持"评级，普遍看好公司在新能源材料领域的技术优势和成本优势，以及受益于西部大开发政策的发展机遇。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-technical">
+    <!-- 技术面分析卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">技术面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">analytics</span>主要技术指标
         </div>
@@ -904,15 +992,21 @@
         </div>
         <p class="mb-4">历史数据显示，德新科技在类似形态下，次日上涨概率为60%，次周上涨概率为100%，次月上涨概率为100%。最可能的表现模式是"连续上涨"，风险等级中低，机会等级高。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-capital">
+    <!-- 资金面分析卡片 -->
+    <div class="card animate-fade-in delay-400">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">资金面分析</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">account_balance</span>主力资金流向
         </div>
 
         <div class="data-item">
           <span class="data-label">主力资金净流入</span>
-          <span class="data-value data-value-positive">1.65亿元</span>
+          <span class="data-value data-value-positive">1.2亿元</span>
         </div>
         <div class="data-item">
           <span class="data-label">占当日成交额比例</span>
@@ -942,8 +1036,14 @@
         </div>
         <p class="mb-4">机构持股比例15.65%，较上期增持3.85%；外资持股比例1.85%，较上期增持0.65%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-strategy">
+    <!-- 交易策略卡片 -->
+    <div class="card animate-fade-in delay-500">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">交易策略</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">login</span>入场时机
         </div>
@@ -969,8 +1069,14 @@
         </div>
         <p class="mb-4">预计最佳持仓时间为10-15个交易日，最长持仓不超过25个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-intraday">
+    <!-- 盘中应对卡片 -->
+    <div class="card animate-fade-in delay-100">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">盘中应对</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
         </div>
@@ -991,8 +1097,14 @@
         </div>
         <p class="mb-4">二连板股票打开涨停后，若维持在涨幅7%以上，且成交量不放大，可继续持有；若放量滞涨，应考虑止盈。若主力资金仍在净流入，可继续持有；若主力资金净流出，应及时止盈。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-nextday">
+    <!-- 次日操作卡片 -->
+    <div class="card animate-fade-in delay-200">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">次日操作</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">arrow_upward</span>高开应对
         </div>
@@ -1013,8 +1125,14 @@
         </div>
         <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:00-10:30时段的表现，此时段往往决定全天走势。</p>
       </div>
+    </div>
 
-      <div class="tab-content" id="dxkj-risk">
+    <!-- 风险与建议卡片 -->
+    <div class="card animate-fade-in delay-300">
+      <div class="card-header" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+        <h3 class="text-xl font-bold">风险与建议</h3>
+      </div>
+      <div class="p-6">
         <div class="section-title">
           <span class="material-symbols-outlined">policy</span>政策支持与风险
         </div>
@@ -1128,32 +1246,6 @@
 </div>
 
 <script>
-  // 切换标签页
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      const tabContainer = this.closest('.tab-container');
-      const cardBody = tabContainer.parentElement;
-      const tabId = this.getAttribute('data-tab');
-
-      // 移除所有标签页的active类
-      tabContainer.querySelectorAll('.tab').forEach(t => {
-        t.classList.remove('active');
-      });
-
-      // 移除所有内容区域的active类
-      cardBody.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-
-      // 为当前标签页添加active类
-      this.classList.add('active');
-
-      // 为对应的内容区域添加active类
-      const contentId = tabId;
-      cardBody.querySelector(`#${contentId}`).classList.add('active');
-    });
-  });
-
   // 初始化图表
   document.addEventListener('DOMContentLoaded', function() {
     // 北矿科技图表

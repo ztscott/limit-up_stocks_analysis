@@ -200,6 +200,44 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- 报告卡片4 -->
+      <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
+        <div class="h-48 overflow-hidden">
+          <a href="#report-detail" onclick="loadReport('report4')">
+            <img src="/images/png/25_6_3.png" alt="25年6月第三周股票分析报告" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </a>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center mb-3">
+            <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">周推荐</span>
+            <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">市场分析</span>
+            <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">股票</span>
+            <span class="bg-blue-100 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">上证指数</span>
+            <span class="ml-auto text-gray-500 text-sm"><i class="fa fa-calendar-o mr-1"></i> 2025-06-15</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2 hover:text-primary transition-colors">
+            <a href="#report-detail" onclick="loadReport('report4')">25年6月第三周股票分析报告</a>
+          </h3>
+          <p class="text-gray-600 mb-4 line-clamp-3">本报告详细分析了25年6月第三周股票后续三只股票的趋势和投资机会。</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="head.png" alt="分析师头像" class="w-8 h-8 rounded-full mr-2">
+              <span class="text-sm font-medium">Scott</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button class="like-btn flex items-center text-gray-500 hover:text-primary transition-colors" data-report-id="report4">
+                <i class="fa fa-thumbs-o-up mr-1"></i>
+                <span class="like-count">2</span>
+              </button>
+              <button class="comment-btn flex items-center text-gray-500 hover:text-primary transition-colors" data-report-id="report4">
+                <i class="fa fa-comment-o mr-1"></i>
+                <span class="comment-count">0</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 报告卡片1 -->
       <div class="bg-white rounded-xl overflow-hidden card-shadow hover-scale">
         <div class="h-48 overflow-hidden">
@@ -652,6 +690,30 @@
 
   // 报告数据
   const reports = {
+    'report4': {
+      title: '6月第三周股票分析报告',
+      date: '2025-06-12',
+      category: '股票分析',
+      author: 'Scott',
+      authorAvatar: 'https://picsum.photos/seed/author1/40/40',
+      content: `
+                    <div class="prose max-w-none">
+                        <!-- 使用 Tailwind CSS 类设置样式 -->
+                        <a
+                            href="25_06/周推荐6.9-6.13.html"
+                            class="text-primary font-semibold hover:text-secondary hover:underline underline-offset-2 decoration-2 transition-colors"
+                        >
+                            周推荐6.9-6.13股票分析报告
+                        </a>
+                        <p class="text-gray-600 mt-4">
+                            本报告详细分析了25年6月第三周三只股票的未来走势和投资机会，如果您觉得对您有帮助并且投资因此获益，可以点击右上方的按钮适度打赏。
+                        </p>
+                    </div>
+                `,
+      likes: 2,
+      comments: [
+      ]
+    },
     'report1': {
       title: '北矿科技(600980)股票分析报告',
       date: '2025-06-12',
