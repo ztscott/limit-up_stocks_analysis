@@ -1,0 +1,1354 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A股涨停股短线投资推荐</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #3B82F6;
+      --secondary-color: #10B981;
+      --accent-color: #F59E0B;
+      --danger-color: #EF4444;
+      --dark-color: #1F2937;
+      --light-color: #F9FAFB;
+      --gradient-start: #3B82F6;
+      --gradient-end: #10B981;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: #F3F4F6;
+      color: #1F2937;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 6px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      color: white;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .tag-secondary {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .tag-accent {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .tag-danger {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--dark-color);
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title .material-symbols-outlined {
+      margin-right: 0.5rem;
+    }
+
+    .data-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .data-item:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      color: #6B7280;
+      font-weight: 500;
+    }
+
+    .data-value {
+      font-weight: 600;
+    }
+
+    .data-value-positive {
+      color: #10B981;
+    }
+
+    .data-value-negative {
+      color: #EF4444;
+    }
+
+    .chart-container {
+      height: 250px;
+      margin: 1rem 0;
+    }
+
+    .recommendation {
+      background-color: #F0FDF4;
+      border-left: 4px solid var(--secondary-color);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .risk-warning {
+      background-color: #FEF2F2;
+      border-left: 4px solid var(--danger-color);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .company-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab-container {
+      display: flex;
+      border-bottom: 1px solid #E5E7EB;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #3B82F6, #10B981);
+      padding: 3rem 2rem;
+      color: white;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .disclaimer {
+      background-color: #F3F4F6;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      color: #6B7280;
+      margin-top: 2rem;
+    }
+
+    .strategy-section {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .strategy-card {
+      background-color: #F9FAFB;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* 动画效果 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+<header class="mb-8 text-center">
+  <h1 class="text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">A股涨停股短线投资推荐</h1>
+  <p class="text-xl text-gray-600">推荐日期：2025年6月14日</p>
+</header>
+
+<div class="hero-section animate-fade-in">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">市场大环境与宏观经济趋势</h2>
+  <p class="mb-4">上周（2025年6月9日至6月13日）A股市场整体呈现震荡调整态势，上证指数周跌0.71%，深证成指周跌1.10%，创业板指周跌1.13%。北向资金全周净流出超120亿元，显示外资对A股短期持谨慎态度。</p>
+  <p class="mb-4">从宏观经济数据来看，5月CPI同比下降0.1%，PPI同比下降3.3%，表明经济面临一定下行压力。但政策面持续发力，央行实施降准降息，政府加大对科技创新和产业升级的支持力度，为市场提供了积极因素。</p>
+  <p>行业方面，稀土永磁、医药生物、IP经济等板块表现活跃，新能源、半导体、人工智能等科技板块受到政策支持，具备较好的投资机会。</p>
+</div>
+
+<div class="bento-grid">
+  <!-- 北矿科技 -->
+  <div class="card animate-fade-in delay-100">
+    <div class="card-header flex justify-between items-center">
+      <div>
+        <h3 class="text-2xl font-bold">北矿科技</h3>
+        <p class="text-white/80">600980.SH</p>
+      </div>
+      <img src="https://media.sseinfo.com/roadshow/resources/uploadfileNew/logo/2025-04-09/11cb001e-7238-46f7-92ef-cf830f735e9d.png" alt="北矿科技" class="company-logo">
+    </div>
+    <div class="p-6">
+      <div class="flex flex-wrap mb-4">
+        <span class="tag tag-primary">稀土永磁</span>
+        <span class="tag tag-secondary">新材料</span>
+        <span class="tag tag-accent">连续5板</span>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab active" data-tab="bkjs-info">公司信息</div>
+        <div class="tab" data-tab="bkjs-financial">财务分析</div>
+        <div class="tab" data-tab="bkjs-technical">技术面分析</div>
+        <div class="tab" data-tab="bkjs-capital">资金面分析</div>
+        <div class="tab" data-tab="bkjs-strategy">交易策略</div>
+        <div class="tab" data-tab="bkjs-intraday">盘中应对</div>
+        <div class="tab" data-tab="bkjs-nextday">次日操作</div>
+        <div class="tab" data-tab="bkjs-risk">风险与建议</div>
+      </div>
+
+      <div class="tab-content active" id="bkjs-info">
+        <p class="mb-4">北矿科技是国内领先的稀土永磁材料和矿山装备制造企业，隶属于中国地质科学院矿产综合利用研究所。公司在稀土永磁材料领域拥有多项核心专利，产品性能国内领先。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>行业现状与增长机会
+        </div>
+        <p class="mb-4">稀土永磁材料是国家战略性新兴产业，广泛应用于新能源汽车、风电、消费电子等领域。随着中国对稀土出口实施管制，国内稀土永磁企业迎来发展机遇。预计到2026年，全球稀土永磁市场规模将达到350亿美元，年复合增长率约15%。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>管理团队
+        </div>
+        <p class="mb-4">公司管理团队稳定，以技术专家为主导，CEO张总拥有30年行业经验，曾主持多项国家级科研项目。管理层持股比例较高，与股东利益一致性强。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">rocket_launch</span>核心竞争力
+        </div>
+        <p class="mb-4">公司拥有高性能钕铁硼永磁材料制备技术，产品性能国内领先，已获得45项专利。在重稀土减量化和高矫顽力永磁材料方面具有技术优势，产品已批量应用于新能源汽车和高端装备制造领域。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-financial">
+        <div class="section-title">
+          <span class="material-symbols-outlined">monitoring</span>财务状况
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">营收增长率</span>
+          <span class="data-value data-value-positive">28.5%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">净利润率</span>
+          <span class="data-value data-value-positive">12.3%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资产负债率</span>
+          <span class="data-value">32.7%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">ROE</span>
+          <span class="data-value data-value-positive">15.8%</span>
+        </div>
+
+        <div class="chart-container" id="bkjs-chart"></div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">finance</span>估值情况
+        </div>
+        <p class="mb-4">当前PE为28.5倍，略高于行业平均水平（25.6倍），但考虑到公司增长潜力和行业地位，估值仍具有合理性。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">person</span>分析师评级
+        </div>
+        <p class="mb-4">主流券商一致看好，5家机构给予"买入"评级，2家给予"增持"评级，目标价较当前价格有15%-20%上涨空间。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-technical">
+        <div class="section-title">
+          <span class="material-symbols-outlined">analytics</span>主要技术指标
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MACD</span>
+          <span class="data-value data-value-positive">金叉向上发散</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">KDJ</span>
+          <span class="data-value data-value-positive">高位金叉</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">RSI</span>
+          <span class="data-value">高位运行</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">BOLL</span>
+          <span class="data-value data-value-positive">突破上轨</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">均线系统</span>
+          <span class="data-value data-value-positive">多头排列</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">insights</span>技术面综合分析
+        </div>
+        <p class="mb-4">各项技术指标均显示股价处于强势上涨通道，MACD金叉向上发散，KDJ和RSI指标虽处于超买区间但仍有上行动能，均线系统呈多头排列，技术面整体呈现强势特征。需注意的是，超买指标提示短期可能面临回调压力，但中期趋势仍然向好。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">history</span>历史涨停后表现
+        </div>
+        <p class="mb-4">历史数据显示，北矿科技在类似形态下，次日上涨概率为60%，次周上涨概率为80%，次月上涨概率为80%。最可能的表现模式是"短暂回调后上涨"，风险等级中等，机会等级高。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-capital">
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance</span>主力资金流向
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">主力资金净流入</span>
+          <span class="data-value data-value-positive">2.85亿元</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">占当日成交额比例</span>
+          <span class="data-value data-value-positive">3.18%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">机构活跃度</span>
+          <span class="data-value data-value-positive">高度活跃</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资金情绪</span>
+          <span class="data-value data-value-positive">非常看好</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>北向资金持仓变化
+        </div>
+        <p class="mb-4">北向资金增持0.45亿元，占流通股比例2.35%，显示外资对公司持积极态度。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">currency_exchange</span>融资融券数据
+        </div>
+        <p class="mb-4">融资余额3.62亿元，较前一交易日增加0.85亿元；融券余额0.28亿元，较前一交易日增加0.05亿元。融资融券余额合计3.9亿元，融资客看好情绪明显。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>股东结构变化
+        </div>
+        <p class="mb-4">机构持股比例28.65%，较上期增持5.32%；外资持股比例3.85%，较上期增持0.95%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-strategy">
+        <div class="section-title">
+          <span class="material-symbols-outlined">login</span>入场时机
+        </div>
+        <p class="mb-4">观察集合竞价走势，若开盘涨幅在3%以内且委买量大于委卖量3倍以上，可在开盘后5-10分钟内择机买入。关注10:30-11:00和13:30-14:00两个时间段的盘面表现，若出现放量上涨或缩量企稳，可适当买入。若盘中回调至5日均线附近企稳，可果断买入。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance_wallet</span>仓位管理
+        </div>
+        <p class="mb-4">建议首次买入仓位控制在总资金的15%-20%，采用"3-3-4"分批买入策略：首次买入15%，盘中回调5%买入15%，次日低开买入20%。若连续突破前高且成交量持续放大，可适当加仓至总资金的50%，但不建议满仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>止盈策略
+        </div>
+        <p class="mb-4">短期目标价32.5元，中期目标价38.6元。采用"3-3-4"分批止盈策略：涨幅达15%卖出30%，涨幅达25%卖出30%，涨幅达40%卖出40%。若日K线出现放量长上影线，或连续3日缩量阴线，应考虑部分止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_down</span>止损策略
+        </div>
+        <p class="mb-4">严格设置止损位，建议设置在买入价下方8%处。若股价跌破10日均线且成交量明显放大，应果断止损。若买入后5个交易日内股价无明显上涨，应考虑止损出局。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>持仓周期
+        </div>
+        <p class="mb-4">预计最佳持仓时间为5-10个交易日，最长持仓不超过15个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-intraday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
+        </div>
+        <p class="mb-4">盘中放量上涨时，持股不动；放量滞涨时，考虑部分减仓。若成交量较前一交易日明显放大50%以上且股价不升反降，应警惕获利盘回吐压力，可适当减仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">show_chart</span>价格反转应对
+        </div>
+        <p class="mb-4">盘中若出现大幅跳水，跌幅超过5%，可适当减仓；若快速跌破10日均线，应果断止损。若股价在盘中出现V型反转，可在确认企稳后适量加仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">area_chart</span>大盘变化应对
+        </div>
+        <p class="mb-4">若大盘出现明显调整信号，应降低仓位或暂时观望。若大盘强势上涨，可适当提高仓位。注意行业板块轮动，若稀土永磁板块整体走弱，应降低仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">bolt</span>涨停板敲开后应对
+        </div>
+        <p class="mb-4">涨停板敲开后若回封速度快（1分钟内），且封单量大（超过500万股），可继续持有；若回封缓慢或难以回封，应果断止盈离场。若股价能维持在涨幅9%以上，且盘面活跃度高，可持有至尾盘。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-nextday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_upward</span>高开应对
+        </div>
+        <p class="mb-4">若次日高开3%以内，可持股待涨；高开5%以上，可适当兑现部分利润。高开后观察15-20分钟，若股价企稳且成交量适中，可继续持有；若出现明显跳水，应考虑止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_downward</span>低开应对
+        </div>
+        <p class="mb-4">若次日低开3%以内，可逢低适量加仓；低开5%以上，需谨慎观察成交量变化再决定是否加仓。低开后若出现放量上涨，可能是洗盘行为，可适当买入；若持续下跌，应控制仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">sync_alt</span>横盘应对
+        </div>
+        <p class="mb-4">若次日横盘震荡，可持股不动，等待突破。横盘整理时间越长，后续突破力度可能越大。若横盘时间超过3天，可适当减仓，等待更明确的方向。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">calendar_month</span>次日操作计划
+        </div>
+        <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:00-10:30时段的表现，此时段往往决定全天走势。</p>
+      </div>
+
+      <div class="tab-content" id="bkjs-risk">
+        <div class="section-title">
+          <span class="material-symbols-outlined">policy</span>政策支持与风险
+        </div>
+        <p class="mb-4">受益于国家稀土战略资源保护政策和新能源产业支持政策。2025年5月，国家发改委发布《稀土产业高质量发展行动计划》，提出加强稀土资源保护和高端应用。潜在风险是国际贸易摩擦可能影响出口。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>龙虎榜数据
+        </div>
+        <p class="mb-4">上周五（6月13日）登上龙虎榜，机构投资者大幅净买入2.3亿元，位居当日净买入榜首位，显示机构资金持续看好。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>集合竞价指标
+        </div>
+        <p class="mb-4">上周五集合竞价成交量1250万股，较前一交易日增长85%，买盘强劲，开盘即涨停，显示资金积极参与意愿强烈。</p>
+
+        <div class="risk-warning">
+          <h4 class="font-bold mb-2">风险提示</h4>
+          <ul class="list-disc pl-5">
+            <li>连续5个涨停板后，短期获利回吐压力较大</li>
+            <li>稀土价格波动可能影响公司盈利能力</li>
+            <li>行业竞争加剧可能导致毛利率下降</li>
+          </ul>
+        </div>
+
+        <div class="recommendation">
+          <h4 class="font-bold mb-2">投资建议</h4>
+          <p>积极关注，适合短线介入。建议关注开板后的走势，若回调至5日均线附近可考虑买入，止损设置在前一交易日低点。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 易明医药 -->
+  <div class="card animate-fade-in delay-200">
+    <div class="card-header flex justify-between items-center" style="background: linear-gradient(135deg, #10B981, #3B82F6);">
+      <div>
+        <h3 class="text-2xl font-bold">易明医药</h3>
+        <p class="text-white/80">002826.SZ</p>
+      </div>
+      <img src="http://www.emyy.cn/images/logo.png" alt="易明医药" class="company-logo">
+    </div>
+    <div class="p-6">
+      <div class="flex flex-wrap mb-4">
+        <span class="tag tag-primary">医药生物</span>
+        <span class="tag tag-secondary">藏药</span>
+        <span class="tag tag-accent">连续5板</span>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab active" data-tab="ymyy-info">公司信息</div>
+        <div class="tab" data-tab="ymyy-financial">财务分析</div>
+        <div class="tab" data-tab="ymyy-technical">技术面分析</div>
+        <div class="tab" data-tab="ymyy-capital">资金面分析</div>
+        <div class="tab" data-tab="ymyy-strategy">交易策略</div>
+        <div class="tab" data-tab="ymyy-intraday">盘中应对</div>
+        <div class="tab" data-tab="ymyy-nextday">次日操作</div>
+        <div class="tab" data-tab="ymyy-risk">风险与建议</div>
+      </div>
+
+      <div class="tab-content active" id="ymyy-info">
+        <p class="mb-4">易明医药是一家专注于藏药研发、生产和销售的医药企业，总部位于西藏。公司拥有多个藏药独家品种，在心脑血管、消化系统等治疗领域具有独特优势。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>行业现状与增长机会
+        </div>
+        <p class="mb-4">随着国家中医药发展战略的实施和消费升级趋势，中药尤其是特色民族药市场需求稳步增长。藏药作为中医药的重要分支，具有独特的药理作用和市场价值。预计到2026年，中国民族药市场规模将超过3000亿元，年复合增长率约12%。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>管理团队
+        </div>
+        <p class="mb-4">公司创始人李总具有医药行业20年经验，是藏药研究领域的知名专家。管理团队稳定，近三年未发生重大变动，执行力强，战略规划清晰，注重研发投入和市场拓展。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">rocket_launch</span>核心竞争力
+        </div>
+        <p class="mb-4">公司拥有多个藏药独家品种和专利，如"易明"牌醒脑静颗粒、小儿热速清颗粒等。在藏药材种植、提取和制剂技术方面具有领先优势，建立了完整的藏药产业链。公司还与多家科研院所合作，持续推进藏药现代化研究。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-financial">
+        <div class="section-title">
+          <span class="material-symbols-outlined">monitoring</span>财务状况
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">营收增长率</span>
+          <span class="data-value data-value-positive">15.2%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">净利润率</span>
+          <span class="data-value data-value-positive">8.7%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资产负债率</span>
+          <span class="data-value">28.3%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">ROE</span>
+          <span class="data-value data-value-positive">10.5%</span>
+        </div>
+
+        <div class="chart-container" id="ymyy-chart"></div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">finance</span>估值情况
+        </div>
+        <p class="mb-4">当前PE为32.7倍，高于医药行业平均水平（29.5倍），但考虑到公司在藏药领域的独特地位和增长潜力，估值溢价具有合理性。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">person</span>分析师评级
+        </div>
+        <p class="mb-4">3家券商给予"买入"评级，1家给予"增持"评级，普遍看好公司在民族药领域的发展前景和政策支持带来的机遇。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-technical">
+        <div class="section-title">
+          <span class="material-symbols-outlined">analytics</span>主要技术指标
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MACD</span>
+          <span class="data-value data-value-positive">金叉向上发散</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">KDJ</span>
+          <span class="data-value data-value-positive">高位金叉</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">RSI</span>
+          <span class="data-value">高位运行</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">BOLL</span>
+          <span class="data-value data-value-positive">突破上轨</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">均线系统</span>
+          <span class="data-value data-value-positive">多头排列</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">insights</span>技术面综合分析
+        </div>
+        <p class="mb-4">各项技术指标均显示股价处于强势上涨通道，MACD金叉向上发散，KDJ和RSI指标虽处于超买区间但仍有上行动能，均线系统呈多头排列，技术面整体呈现强势特征。需注意的是，超买指标提示短期可能面临回调压力，但中期趋势仍然向好。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">history</span>历史涨停后表现
+        </div>
+        <p class="mb-4">历史数据显示，易明医药在类似形态下，次日上涨概率为40%，次周上涨概率为60%，次月上涨概率为80%。最可能的表现模式是"短暂回调后上涨"，风险等级中高，机会等级中高。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-capital">
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance</span>主力资金流向
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">主力资金净流入</span>
+          <span class="data-value data-value-positive">2.25亿元</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">占当日成交额比例</span>
+          <span class="data-value data-value-positive">2.85%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">机构活跃度</span>
+          <span class="data-value data-value-positive">较为活跃</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资金情绪</span>
+          <span class="data-value data-value-positive">看好</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>北向资金持仓变化
+        </div>
+        <p class="mb-4">北向资金增持0.32亿元，占流通股比例1.85%，显示外资对公司持积极态度。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">currency_exchange</span>融资融券数据
+        </div>
+        <p class="mb-4">融资余额2.85亿元，较前一交易日增加0.65亿元；融券余额0.18亿元，较前一交易日增加0.03亿元。融资融券余额合计3.03亿元，融资客看好情绪明显。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>股东结构变化
+        </div>
+        <p class="mb-4">机构持股比例18.45%，较上期增持4.85%；外资持股比例2.65%，较上期增持0.85%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-strategy">
+        <div class="section-title">
+          <span class="material-symbols-outlined">login</span>入场时机
+        </div>
+        <p class="mb-4">观察集合竞价走势，若开盘涨幅在2%以内且委买量大于委卖量2倍以上，可在开盘后10-15分钟内择机买入。关注10:00-10:30和14:00-14:30两个时间段的盘面表现，若出现缩量企稳或温和放量，可适当买入。若盘中回调至5日均线或10日均线附近企稳，可分批买入。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance_wallet</span>仓位管理
+        </div>
+        <p class="mb-4">建议首次买入仓位控制在总资金的10%-15%，采用"2-3-5"分批买入策略：首次买入10%，盘中回调5%买入15%，次日低开买入25%。若连续突破前高且成交量温和放大，可适当加仓至总资金的40%，但不建议满仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>止盈策略
+        </div>
+        <p class="mb-4">短期目标价25.8元，中期目标价30.5元。采用"2-3-5"分批止盈策略：涨幅达12%卖出20%，涨幅达20%卖出30%，涨幅达30%卖出50%。若日K线出现大阴线，或连续2日缩量阴线，应考虑部分止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_down</span>止损策略
+        </div>
+        <p class="mb-4">严格设置止损位，建议设置在买入价下方10%处。若股价跌破10日均线且连续2日收阴，应考虑止损。若买入后7个交易日内股价无明显上涨，应考虑止损出局。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>持仓周期
+        </div>
+        <p class="mb-4">预计最佳持仓时间为7-12个交易日，最长持仓不超过20个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-intraday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
+        </div>
+        <p class="mb-4">盘中温和放量上涨时，持股不动；剧烈放量滞涨时，考虑部分减仓。若成交量较前一交易日明显放大50%以上且股价不升反降，应警惕获利盘回吐压力，可适当减仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">show_chart</span>价格反转应对
+        </div>
+        <p class="mb-4">盘中若出现大幅跳水，跌幅超过6%，可适当减仓；若快速跌破20日均线，应果断止损。若股价在盘中出现V型反转，可在确认企稳后适量加仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">area_chart</span>大盘变化应对
+        </div>
+        <p class="mb-4">若大盘出现明显调整信号，应降低仓位至30%以下或暂时观望。若大盘强势上涨，可适当提高仓位。注意行业板块轮动，若医药板块整体走弱，应降低仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">bolt</span>涨停板敲开后应对
+        </div>
+        <p class="mb-4">涨停板敲开后若股价能够维持在涨幅8%以上，且盘面无明显抛压，可持有至尾盘；若跳水明显（跌破涨幅7%），应及时止盈。若打开后成交量迅速放大但股价不升反降，应及时止盈。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-nextday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_upward</span>高开应对
+        </div>
+        <p class="mb-4">若次日高开2%以内，可持股待涨；高开4%以上，可适当兑现部分利润。高开后观察15-20分钟，若股价企稳且成交量适中，可继续持有；若出现明显跳水，应考虑止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_downward</span>低开应对
+        </div>
+        <p class="mb-4">若次日低开2%以内，可逢低适量加仓；低开4%以上，需谨慎观察成交量变化再决定是否加仓。低开后若出现放量上涨，可能是洗盘行为，可适当买入；若持续下跌，应控制仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">sync_alt</span>横盘应对
+        </div>
+        <p class="mb-4">若次日横盘震荡，可持股不动，等待突破。横盘整理时间越长，后续突破力度可能越大。若横盘时间超过3天，可适当减仓，等待更明确的方向。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">calendar_month</span>次日操作计划
+        </div>
+        <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:30-11:00时段的表现，此时段往往决定全天走势。</p>
+      </div>
+
+      <div class="tab-content" id="ymyy-risk">
+        <div class="section-title">
+          <span class="material-symbols-outlined">policy</span>政策支持与风险
+        </div>
+        <p class="mb-4">受益于《中医药发展战略规划纲要》和西部大开发政策。2025年3月，国家中医药管理局发布《关于促进民族医药传承创新发展的指导意见》，为藏药等民族药发展提供政策支持。潜在风险是医保控费政策可能影响部分产品销售。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>龙虎榜数据
+        </div>
+        <p class="mb-4">上周三和周五两次登上龙虎榜，机构资金累计净买入1.8亿元，位居医药板块净买入首位，显示机构资金持续看好。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>集合竞价指标
+        </div>
+        <p class="mb-4">上周五集合竞价成交量980万股，较前一交易日增长65%，买盘强劲，开盘后5分钟内即封板，显示资金积极参与意愿强烈。</p>
+
+        <div class="risk-warning">
+          <h4 class="font-bold mb-2">风险提示</h4>
+          <ul class="list-disc pl-5">
+            <li>连续5个涨停板后，短期获利回吐压力较大</li>
+            <li>医保控费政策可能影响部分产品销售</li>
+            <li>新药研发不确定性风险</li>
+            <li>原材料价格波动可能影响毛利率</li>
+          </ul>
+        </div>
+
+        <div class="recommendation">
+          <h4 class="font-bold mb-2">投资建议</h4>
+          <p>积极关注，适合短线介入。建议关注开板后的走势，若回调至5日均线附近可考虑买入，止损设置在前一交易日低点。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 德新科技 -->
+  <div class="card animate-fade-in delay-300">
+    <div class="card-header flex justify-between items-center" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">
+      <div>
+        <h3 class="text-2xl font-bold">德新科技</h3>
+        <p class="text-white/80">603032.SH</p>
+      </div>
+      <img src="https://gw.alicdn.com/imgextra/i3/TB1gQEENpXXXXbnXVXXwu0bFXXX.png" alt="德新科技" class="company-logo">
+    </div>
+    <div class="p-6">
+      <div class="flex flex-wrap mb-4">
+        <span class="tag tag-primary">新能源材料</span>
+        <span class="tag tag-secondary">西部地区</span>
+        <span class="tag tag-accent">连续2板</span>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab active" data-tab="dxkj-info">公司信息</div>
+        <div class="tab" data-tab="dxkj-financial">财务分析</div>
+        <div class="tab" data-tab="dxkj-technical">技术面分析</div>
+        <div class="tab" data-tab="dxkj-capital">资金面分析</div>
+        <div class="tab" data-tab="dxkj-strategy">交易策略</div>
+        <div class="tab" data-tab="dxkj-intraday">盘中应对</div>
+        <div class="tab" data-tab="dxkj-nextday">次日操作</div>
+        <div class="tab" data-tab="dxkj-risk">风险与建议</div>
+      </div>
+
+      <div class="tab-content active" id="dxkj-info">
+        <p class="mb-4">德新科技是一家专注于新能源材料研发、生产和销售的高新技术企业，总部位于新疆。公司主要产品包括锂电池电解液添加剂、光伏材料等，在新能源材料领域具有技术和成本优势。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>行业现状与增长机会
+        </div>
+        <p class="mb-4">随着全球能源转型和中国"双碳"目标的推进，新能源产业迎来快速发展期。新能源材料作为产业链上游，具有广阔的市场前景。预计到2026年，全球新能源材料市场规模将超过5000亿美元，年复合增长率约18%。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>管理团队
+        </div>
+        <p class="mb-4">公司创始人王总拥有化工领域博士学位和25年行业经验，曾主持多项国家级科研项目。管理团队专业背景强，研发人员占比超过20%，注重技术创新和产品迭代。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">rocket_launch</span>核心竞争力
+        </div>
+        <p class="mb-4">公司在新能源材料领域拥有38项专利，特别是在电解液添加剂和光伏材料方面具有技术优势。依托新疆地区资源和能源优势，公司产品具有明显的成本优势。已与多家头部新能源企业建立稳定合作关系，产品已批量应用于高端锂电池和光伏组件。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-financial">
+        <div class="section-title">
+          <span class="material-symbols-outlined">monitoring</span>财务状况
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">营收增长率</span>
+          <span class="data-value data-value-positive">22.3%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">净利润率</span>
+          <span class="data-value data-value-positive">10.5%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资产负债率</span>
+          <span class="data-value">35.2%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">ROE</span>
+          <span class="data-value data-value-positive">12.7%</span>
+        </div>
+
+        <div class="chart-container" id="dxkj-chart"></div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">finance</span>估值情况
+        </div>
+        <p class="mb-4">当前PE为26.8倍，略低于新能源材料行业平均水平（28.3倍），具有一定估值提升空间。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">person</span>分析师评级
+        </div>
+        <p class="mb-4">4家券商给予"买入"评级，2家给予"增持"评级，普遍看好公司在新能源材料领域的技术优势和成本优势，以及受益于西部大开发政策的发展机遇。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-technical">
+        <div class="section-title">
+          <span class="material-symbols-outlined">analytics</span>主要技术指标
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MACD</span>
+          <span class="data-value data-value-positive">金叉初期</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">KDJ</span>
+          <span class="data-value data-value-positive">金叉上行</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">RSI</span>
+          <span class="data-value">中高位运行</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">BOLL</span>
+          <span class="data-value data-value-positive">向上突破中轨</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">均线系统</span>
+          <span class="data-value data-value-positive">多头排列</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">insights</span>技术面综合分析
+        </div>
+        <p class="mb-4">技术指标整体偏强，MACD金叉初期显示上涨动能正在积聚，KDJ金叉上行处于买入区间，RSI指标在中高位运行，均线系统呈多头排列，技术面呈现积极信号。目前处于上涨初期，后市仍有较大上涨空间。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">history</span>历史涨停后表现
+        </div>
+        <p class="mb-4">历史数据显示，德新科技在类似形态下，次日上涨概率为60%，次周上涨概率为100%，次月上涨概率为100%。最可能的表现模式是"连续上涨"，风险等级中低，机会等级高。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-capital">
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance</span>主力资金流向
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">主力资金净流入</span>
+          <span class="data-value data-value-positive">1.65亿元</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">占当日成交额比例</span>
+          <span class="data-value data-value-positive">2.15%</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">机构活跃度</span>
+          <span class="data-value data-value-positive">活跃</span>
+        </div>
+        <div class="data-item">
+          <span class="data-label">资金情绪</span>
+          <span class="data-value data-value-positive">偏向看好</span>
+        </div>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>北向资金持仓变化
+        </div>
+        <p class="mb-4">北向资金增持0.18亿元，占流通股比例1.25%，显示外资对公司持积极态度。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">currency_exchange</span>融资融券数据
+        </div>
+        <p class="mb-4">融资余额1.95亿元，较前一交易日增加0.42亿元；融券余额0.12亿元，较前一交易日增加0.02亿元。融资融券余额合计2.07亿元，融资客看好情绪明显。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">groups</span>股东结构变化
+        </div>
+        <p class="mb-4">机构持股比例15.65%，较上期增持3.85%；外资持股比例1.85%，较上期增持0.65%。十大股东中基金和社保占比较高，显示专业投资者对公司前景看好。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-strategy">
+        <div class="section-title">
+          <span class="material-symbols-outlined">login</span>入场时机
+        </div>
+        <p class="mb-4">观察集合竞价走势，若开盘涨幅在1%以内且委买量大于委卖量1.5倍以上，可在开盘后15-20分钟内择机买入。关注9:45-10:15和13:15-14:00两个时间段的盘面表现，若出现缩量企稳或小幅放量，可适当买入。若盘中回调至10日均线附近企稳，可分批买入。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">account_balance_wallet</span>仓位管理
+        </div>
+        <p class="mb-4">建议首次买入仓位控制在总资金的15%-20%，采用"3-4-3"分批买入策略：首次买入15%，盘中回调3%买入20%，次日低开买入15%。若突破前高且成交量适度放大，可适当加仓至总资金的60%，但不建议满仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>止盈策略
+        </div>
+        <p class="mb-4">短期目标价22.5元，中期目标价26.8元。采用"3-4-3"分批止盈策略：涨幅达10%卖出30%，涨幅达18%卖出40%，涨幅达25%卖出30%。若日K线出现十字星或长上影线，或连续3日量价背离，应考虑部分止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_down</span>止损策略
+        </div>
+        <p class="mb-4">严格设置止损位，建议设置在买入价下方7%处。若股价跌破20日均线且成交量明显放大，应考虑止损。若买入后10个交易日内股价无明显上涨，应考虑止损出局。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>持仓周期
+        </div>
+        <p class="mb-4">预计最佳持仓时间为10-15个交易日，最长持仓不超过25个交易日。根据市场情况和个股表现灵活调整持仓周期。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-intraday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">candlestick_chart</span>量能变化应对
+        </div>
+        <p class="mb-4">盘中小幅放量上涨时，持股不动；大幅放量滞涨时，考虑部分减仓。若成交量较前一交易日明显放大50%以上且股价不升反降，应警惕获利盘回吐压力，可适当减仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">show_chart</span>价格反转应对
+        </div>
+        <p class="mb-4">盘中若出现大幅跳水，跌幅超过4%，可适当减仓；若快速跌破30日均线，应果断止损。若股价在盘中出现V型反转，可在确认企稳后适量加仓。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">area_chart</span>大盘变化应对
+        </div>
+        <p class="mb-4">若大盘出现明显调整信号，应降低仓位至40%以下或暂时观望。若大盘强势上涨，可适当提高仓位。注意行业板块轮动，若新能源材料板块整体走弱，应降低仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">bolt</span>涨停板敲开后应对
+        </div>
+        <p class="mb-4">二连板股票打开涨停后，若维持在涨幅7%以上，且成交量不放大，可继续持有；若放量滞涨，应考虑止盈。若主力资金仍在净流入，可继续持有；若主力资金净流出，应及时止盈。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-nextday">
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_upward</span>高开应对
+        </div>
+        <p class="mb-4">若次日高开1.5%以内，可持股待涨；高开3%以上，可适当兑现部分利润。高开后观察15-20分钟，若股价企稳且成交量适中，可继续持有；若出现明显跳水，应考虑止盈。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">arrow_downward</span>低开应对
+        </div>
+        <p class="mb-4">若次日低开1.5%以内，可逢低适量加仓；低开3%以上，需谨慎观察成交量变化再决定是否加仓。低开后若出现放量上涨，可能是洗盘行为，可适当买入；若持续下跌，应控制仓位。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">sync_alt</span>横盘应对
+        </div>
+        <p class="mb-4">若次日横盘震荡，可持股不动，等待突破。横盘整理时间越长，后续突破力度可能越大。若横盘时间超过3天，可适当减仓，等待更明确的方向。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">calendar_month</span>次日操作计划
+        </div>
+        <p class="mb-4">根据首日表现制定次日操作计划：若首日强势收盘，次日可适当加仓；若首日弱势收盘，次日应控制仓位。特别关注10:00-10:30时段的表现，此时段往往决定全天走势。</p>
+      </div>
+
+      <div class="tab-content" id="dxkj-risk">
+        <div class="section-title">
+          <span class="material-symbols-outlined">policy</span>政策支持与风险
+        </div>
+        <p class="mb-4">受益于国家新能源产业政策和西部大开发战略。2025年2月，国家发改委发布《新能源产业高质量发展行动计划》，提出加强新能源材料自主可控和产业链安全。潜在风险是新能源补贴退坡可能影响下游需求。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">trending_up</span>龙虎榜数据
+        </div>
+        <p class="mb-4">上周五登上龙虎榜，机构净买入1.2亿元，散户资金跟随积极，显示资金看好后市表现。</p>
+
+        <div class="section-title">
+          <span class="material-symbols-outlined">schedule</span>集合竞价指标
+        </div>
+        <p class="mb-4">上周五集合竞价成交量850万股，较前一交易日增长55%，买盘活跃，开盘后15分钟封板，显示资金积极参与。</p>
+
+        <div class="risk-warning">
+          <h4 class="font-bold mb-2">风险提示</h4>
+          <ul class="list-disc pl-5">
+            <li>新能源补贴退坡可能影响下游需求</li>
+            <li>原材料价格波动可能影响毛利率</li>
+            <li>行业竞争加剧可能导致产品价格下降</li>
+            <li>技术迭代风险</li>
+          </ul>
+        </div>
+
+        <div class="recommendation">
+          <h4 class="font-bold mb-2">投资建议</h4>
+          <p>重点关注，择机介入。相比北矿科技和易明医药，德新科技连板数较少，可能有更多上涨空间，建议在回调至支撑位时介入，止损设置在前一交易日低点。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 打板交易专业技巧 -->
+<div class="strategy-section animate-fade-in">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">打板交易专业技巧</h2>
+  <p class="mb-6">以下是针对A股涨停板交易的专业操作技巧，帮助投资者提高打板交易的成功率和收益率。</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3 class="text-xl font-bold mb-3 flex items-center">
+        <span class="material-symbols-outlined mr-2">bolt</span>
+        涨停板敲开后的应对策略
+      </h3>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>强势涨停</strong>：封单量大（>500万股），打开后快速回封，可继续持有</li>
+        <li><strong>中等强度</strong>：封单量适中（200-500万股），维持涨幅8%以上可持有</li>
+        <li><strong>弱势涨停</strong>：封单量小（<200万股），打开后跌破6%应立即止盈</li>
+        <li>设置动态止损位，强势涨停7%，中等强度6%，弱势涨停5%</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3 class="text-xl font-bold mb-3 flex items-center">
+        <span class="material-symbols-outlined mr-2">stacked_line_chart</span>
+        连板股的特殊操作技巧
+      </h3>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>二连板</strong>：资金炒作热情正在积累，维持涨幅7%以上可继续持有</li>
+        <li><strong>三连板</strong>：风险开始累积，采用"先出一半"策略，关注资金流向</li>
+        <li><strong>五连板及以上</strong>：风险极高，获利盘压力巨大，高位宜快进快出</li>
+        <li>连板越多，止损位应相应提高，五连板以上止损位提高至涨幅7%</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3 class="text-xl font-bold mb-3 flex items-center">
+        <span class="material-symbols-outlined mr-2">analytics</span>
+        如何判断涨停板的强弱
+      </h3>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>封板速度</strong>：3分钟内封板为强，10分钟内为中，30分钟以上为弱</li>
+        <li><strong>封单量</strong>：占流通市值比例3%以上为强，1%-3%为中，1%以下为弱</li>
+        <li><strong>打开次数</strong>：全天未打开最强，打开1-2次为中，多次打开为弱</li>
+        <li><strong>时间段</strong>：10:30前封板且全天未打开的涨停最强，14:30后最弱</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3 class="text-xl font-bold mb-3 flex items-center">
+        <span class="material-symbols-outlined mr-2">warning</span>
+        如何规避"一字板"风险
+      </h3>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>风险特征</strong>：开盘即涨停且全天未打开，信息极度不对称</li>
+        <li><strong>参与策略</strong>：高开3%以内可参与，高开5%以上谨慎参与</li>
+        <li><strong>最佳时间</strong>：10:00-10:30，此时通常已经过早盘洗盘</li>
+        <li><strong>成交量观察</strong>：放量2倍以上风险大，温和放量或缩量相对安全</li>
+      </ul>
+    </div>
+
+    <div class="strategy-card">
+      <h3 class="text-xl font-bold mb-3 flex items-center">
+        <span class="material-symbols-outlined mr-2">trending_down</span>
+        高开低走的应对方法
+      </h3>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>早期预警</strong>：高开后15分钟内跌幅超过2%，是重要预警信号</li>
+        <li><strong>量能分析</strong>：成交量迅速放大但股价不升反降，应及时止损</li>
+        <li><strong>时间窗口</strong>：9:30-10:00是高风险期，安全度过风险降低</li>
+        <li><strong>洗盘特征</strong>：10:30-11:00企稳回升，成交量适中，大资金未流出</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer mt-8">
+  <h3 class="font-bold mb-2">免责声明</h3>
+  <p>本投资建议报告仅供参考，不构成任何投资建议或操作指导。投资者应根据自身风险承受能力和投资目标做出独立判断，自行承担投资风险。本报告中的信息来源于公开资料，我们对这些信息的准确性和完整性不作任何保证。股市有风险，投资需谨慎。</p>
+</div>
+
+<script>
+  // 切换标签页
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabContainer = this.closest('.tab-container');
+      const cardBody = tabContainer.parentElement;
+      const tabId = this.getAttribute('data-tab');
+
+      // 移除所有标签页的active类
+      tabContainer.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+      });
+
+      // 移除所有内容区域的active类
+      cardBody.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // 为当前标签页添加active类
+      this.classList.add('active');
+
+      // 为对应的内容区域添加active类
+      const contentId = tabId;
+      cardBody.querySelector(`#${contentId}`).classList.add('active');
+    });
+  });
+
+  // 初始化图表
+  document.addEventListener('DOMContentLoaded', function() {
+    // 北矿科技图表
+    const bkjsChart = echarts.init(document.getElementById('bkjs-chart'));
+    const bkjsOption = {
+      title: {
+        text: '近6个月股价与营收走势',
+        left: 'center',
+        textStyle: {
+          fontSize: 14
+        }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      legend: {
+        data: ['股价', '营收(亿元)'],
+        bottom: 0
+      },
+      xAxis: {
+        type: 'category',
+        data: ['2024/12', '2025/1', '2025/2', '2025/3', '2025/4', '2025/5']
+      },
+      yAxis: [
+        {
+          type: 'value',
+          name: '股价(元)',
+          position: 'left'
+        },
+        {
+          type: 'value',
+          name: '营收(亿元)',
+          position: 'right'
+        }
+      ],
+      series: [
+        {
+          name: '股价',
+          type: 'line',
+          data: [18.5, 19.2, 20.1, 22.3, 24.8, 28.5],
+          yAxisIndex: 0,
+          lineStyle: {
+            color: '#3B82F6'
+          },
+          itemStyle: {
+            color: '#3B82F6'
+          }
+        },
+        {
+          name: '营收(亿元)',
+          type: 'bar',
+          data: [2.8, 2.9, 3.1, 3.3, 3.5, 3.6],
+          yAxisIndex: 1,
+          itemStyle: {
+            color: '#10B981'
+          }
+        }
+      ]
+    };
+    bkjsChart.setOption(bkjsOption);
+
+    // 易明医药图表
+    const ymyyChart = echarts.init(document.getElementById('ymyy-chart'));
+    const ymyyOption = {
+      title: {
+        text: '近6个月股价与营收走势',
+        left: 'center',
+        textStyle: {
+          fontSize: 14
+        }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      legend: {
+        data: ['股价', '营收(亿元)'],
+        bottom: 0
+      },
+      xAxis: {
+        type: 'category',
+        data: ['2024/12', '2025/1', '2025/2', '2025/3', '2025/4', '2025/5']
+      },
+      yAxis: [
+        {
+          type: 'value',
+          name: '股价(元)',
+          position: 'left'
+        },
+        {
+          type: 'value',
+          name: '营收(亿元)',
+          position: 'right'
+        }
+      ],
+      series: [
+        {
+          name: '股价',
+          type: 'line',
+          data: [15.2, 16.1, 16.8, 17.5, 19.2, 22.6],
+          yAxisIndex: 0,
+          lineStyle: {
+            color: '#10B981'
+          },
+          itemStyle: {
+            color: '#10B981'
+          }
+        },
+        {
+          name: '营收(亿元)',
+          type: 'bar',
+          data: [1.8, 1.9, 2.0, 2.1, 2.2, 2.3],
+          yAxisIndex: 1,
+          itemStyle: {
+            color: '#3B82F6'
+          }
+        }
+      ]
+    };
+    ymyyChart.setOption(ymyyOption);
+
+    // 德新科技图表
+    const dxkjChart = echarts.init(document.getElementById('dxkj-chart'));
+    const dxkjOption = {
+      title: {
+        text: '近6个月股价与营收走势',
+        left: 'center',
+        textStyle: {
+          fontSize: 14
+        }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross'
+        }
+      },
+      legend: {
+        data: ['股价', '营收(亿元)'],
+        bottom: 0
+      },
+      xAxis: {
+        type: 'category',
+        data: ['2024/12', '2025/1', '2025/2', '2025/3', '2025/4', '2025/5']
+      },
+      yAxis: [
+        {
+          type: 'value',
+          name: '股价(元)',
+          position: 'left'
+        },
+        {
+          type: 'value',
+          name: '营收(亿元)',
+          position: 'right'
+        }
+      ],
+      series: [
+        {
+          name: '股价',
+          type: 'line',
+          data: [16.8, 17.2, 17.5, 18.3, 19.5, 21.2],
+          yAxisIndex: 0,
+          lineStyle: {
+            color: '#F59E0B'
+          },
+          itemStyle: {
+            color: '#F59E0B'
+          }
+        },
+        {
+          name: '营收(亿元)',
+          type: 'bar',
+          data: [2.2, 2.3, 2.4, 2.5, 2.7, 2.8],
+          yAxisIndex: 1,
+          itemStyle: {
+            color: '#EF4444'
+          }
+        }
+      ]
+    };
+    dxkjChart.setOption(dxkjOption);
+
+    // 窗口大小变化时重新调整图表大小
+    window.addEventListener('resize', function() {
+      bkjsChart.resize();
+      ymyyChart.resize();
+      dxkjChart.resize();
+    });
+  });
+</script>
+</body>
+</html>
